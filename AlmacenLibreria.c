@@ -13,6 +13,10 @@ int main(){
     char password[][MAX_LENGTH]={"Gato123","Other pass"};
     char trypassword[MAX_LENGTH];
     char tryuser[MAX_LENGTH];
+    //Vectores
+    int id[26],preorden[26],existencia[26],maximo[26],pedido[26],total=0;
+    float precio[26];
+    char titulo[26][MAX_LENGTH],author[26],tipo[26];
 
         do {
             printf("1)Iinciar sesion\n2)Salir del almacen\nEliga opcion:");
