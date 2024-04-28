@@ -43,9 +43,9 @@ int main(){
                     }
                     if(bandera==0){
                         printf("La password o user son incorrectos\n");
-                    } else{
-                        printf("TODOO BIEENN\n");
+                        break;
                     }
+                    printf("TODO BIEN\n");
                     break;
                 case 2:
                     printf("Estas saliendo del progrma...");
