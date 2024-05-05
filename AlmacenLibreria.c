@@ -12,7 +12,7 @@ void limpiarVector(int vector[], int tam, int valor) {
 }
 int main(){
     //Variables basura
-    int bandera=0,idtemp,ubi=0,idvec[MAX_ARTICULOS];
+    int bandera=0,idtemp,ubi=0,idvec[MAX_ARTICULOS],almacenvec[MAX_ARTICULOS];
     char trytitulo[MAX_LENGTH];
     //Variables para Switch cases
     int opt1=0,opt2=0,opt3=0,opt4=0;
@@ -75,11 +75,21 @@ int main(){
     pedido[1][0] = 25;
     tipo[1][0] = 1;
     precio[1][0] = 12.99;
-    strcpy(titulo[1][0], "Libro CDMX 1");
+    strcpy(titulo[1][0], "GOT");
     strcpy(author[1][0], "Autor CDMX 1");
 
+    id[1][1] = 2;
+    preorden[1][1] = 300;
+    existencia[1][1] = 80;
+    maximo[1][1] = 120;
+    pedido[1][1] = 25;
+    tipo[1][1] = 1;
+    precio[1][1] = 122.99;
+    strcpy(titulo[1][1], "Libro CDMX 1");
+    strcpy(author[1][1], "Autor CDMX 2");
+
     // Incrementar el contador de artículos para el almacén de CDMX
-    num_articulos[1] = 1;
+    num_articulos[1] = 2;
 
 
         do {
@@ -138,7 +148,7 @@ int main(){
 
                                             do {
                                                 printf("-----Listar/Buscar-----\n");
-                                                printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Regresaral al menu\nEliga opcion:");
+                                                printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Salir\nEliga opcion:");
                                                 scanf("%i",&opt4);
                                                 switch (opt4) {
                                                     case 1:
@@ -195,7 +205,7 @@ int main(){
                                                                 printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n",
                                                                        "ID", "Titulo", "Autor", "Precio", "Existencia",
                                                                        "Punto de reorden", "Tipo");
-                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |\n",
+                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |",
                                                                        id[opt2 - 1][idtemp - 1],
                                                                        titulo[opt2 - 1][idtemp - 1],
                                                                        author[opt2 - 1][idtemp - 1],
@@ -325,13 +335,60 @@ int main(){
                                                         }
                                                         break;
                                                     case 5:
+                                                        bandera = 0;
+                                                        ubi = 0;
+                                                        printf("----Buscar en todos los almacenes-----\n");
+                                                        printf("Ingresa autor o titulo del libro:");
+                                                        fflush(stdin);
+                                                        fgets(trytitulo, sizeof(trytitulo), stdin);
+                                                        if (trytitulo[strlen(trytitulo) - 1] ==
+                                                            '\n') { //Limpiar el ultimo caracter ingresado
+                                                            trytitulo[strlen(trytitulo) - 1] = '\0';
+                                                        }
+                                                        for (int i = 0; i < MAX_ALMACENES; ++i) {
+                                                            for (int j = 0; j < num_articulos[i]; ++j) {
+                                                                if (strcmp(trytitulo, author[i][j]) == 0||strcmp(trytitulo, titulo[i][j])==0) {
+                                                                    bandera = 1;
+                                                                    idvec[ubi] = j;
+                                                                    almacenvec[ubi]=i;
+                                                                    ubi++;
+                                                                }
+                                                            }
+                                                        }
+                                                        if (bandera != 0) {
+                                                            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo","Almacen");
+                                                            for (int i = 0; i < ubi; i++) {
+                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i | %-25s |", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
+                                                                //Agregar que imprima almacen
+                                                                switch (tipo[almacenvec[i]][idvec[i]]) {
+                                                                    case 1:
+                                                                        printf("Pasta dura\n");
+                                                                        break;
+                                                                    case 2:
+                                                                        printf("Pasta blanda\n");
+                                                                        break;
+                                                                    case 3:
+                                                                        printf("Audio libro\n");
+                                                                        break;
+                                                                    case 4:
+                                                                        printf("E-Book\n");
+                                                                        break;
+                                                                    default:
+                                                                        printf("Desconocido\n");
+                                                                }
+                                                            }
+                                                        } else {
+                                                            printf("No lo tenemos\n");
+                                                        }
+                                                        break;
+                                                    case 6:
                                                         printf("Saliendo del menu 3...\n");
                                                         break;
                                                     default:
                                                         printf("<----->Ingresaste una opcion incorrecta<----->\n");
                                                         break;
                                                 }
-                                            } while (opt4!=5);
+                                            } while (opt4!=6);
                                             break;
                                         case 4:
                                             printf("-----Modificaciones-----\n");
@@ -356,7 +413,7 @@ int main(){
                                 break;
 
                         }
-                    } while (opt2!=1);
+                    } while (opt2!=3);
 
                     break;
                 case 2:
