@@ -5,11 +5,109 @@
 #define MAX_ALMACENES 5
 #define MAX_ARTICULOS 50
 
-void limpiarVector(int vector[], int tam, int valor) {
-    for (int i = 0; i < tam; ++i) {
-        vector[i] = valor;
+void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULOS][MAX_LENGTH], char author[][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int almacenvec[MAX_ARTICULOS],int idvec[MAX_ARTICULOS]) {
+    printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo", "Almacen");
+    for (int i = 0; i < ubi; i++) {
+        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
+        //Agregar que imprima almacen
+        switch (tipo[almacenvec[i]][idvec[i]]) {
+            case 1:
+                printf("Pasta dura\n");
+                break;
+            case 2:
+                printf("Pasta blanda\n");
+                break;
+            case 3:
+                printf("Audio libro\n");
+                break;
+            case 4:
+                printf("E-Book\n");
+                break;
+            default:
+                printf("Desconocido\n");
+                break;
+        }
+        switch (almacenvec[i]) {
+            case 0:
+                printf("Puebla\n");
+                break;
+            case 1:
+                printf("CDMX\n");
+                break;
+            default:
+                printf("Desconocido\n");
+                break;
+        }
     }
 }
+void printAutoresLibros(int ubi, int id[][MAX_ARTICULOS], char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], char author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int opt2, const int idvec[MAX_ARTICULOS]){
+    printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo");
+    for (int i = 0; i < ubi; i++) {
+        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |", id[opt2 - 1][idvec[i]], titulo[opt2 - 1][idvec[i]], author[opt2 - 1][idvec[i]], precio[opt2 - 1][idvec[i]], existencia[opt2 - 1][idvec[i]], preorden[opt2 - 1][idvec[i]]);
+
+        switch (tipo[opt2 - 1][idvec[i]]) {
+            case 1:
+                printf("Pasta dura\n");
+                break;
+            case 2:
+                printf("Pasta blanda\n");
+                break;
+            case 3:
+                printf("Audio libro\n");
+                break;
+            case 4:
+                printf("E-Book\n");
+                break;
+            default:
+                printf("Desconocido\n");
+                break;
+        }
+    }
+}
+void serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulos[], char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], char author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS],int bandera){
+    if (num_articulos[opt2 - 1] != 0) {
+        for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
+            if (idtemp == id[opt2 - 1][i]) {
+                bandera = 1;
+            }
+        }
+        if (bandera == 1) {
+            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n",
+                   "ID", "Titulo", "Autor", "Precio", "Existencia",
+                   "Punto de reorden", "Tipo");
+            printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |",
+                   id[opt2 - 1][idtemp - 1],
+                   titulo[opt2 - 1][idtemp - 1],
+                   author[opt2 - 1][idtemp - 1],
+                   precio[opt2 - 1][idtemp - 1],
+                   existencia[opt2 - 1][idtemp - 1],
+                   preorden[opt2 - 1][idtemp - 1]);
+            switch (tipo[opt2 - 1][idtemp-1]) {
+                case 1:
+                    printf("Pasta dura\n");
+                    break;
+                case 2:
+                    printf("Pasta blanda\n");
+                    break;
+                case 3:
+                    printf("Audio libro\n");
+                    break;
+                case 4:
+                    printf("E-Book\n");
+                    break;
+                default:
+                    printf("Desconocido\n");
+                    break;
+            }
+        } else {
+            printf("El ID del libro no existe\n");
+        }
+
+    } else {
+        printf("El almacen esa vacio\n");
+    }
+}
+
 int main(){
     //Variables basura
     int bandera=0,idtemp,ubi=0,idvec[MAX_ARTICULOS],almacenvec[MAX_ARTICULOS];
@@ -144,8 +242,6 @@ int main(){
                                             printf("-----Venetas-----\n");
                                             break;
                                         case 3:
-                                            printf("-----Listar/Buscar-----\n");
-
                                             do {
                                                 printf("-----Listar/Buscar-----\n");
                                                 printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Salir\nEliga opcion:");
@@ -195,42 +291,8 @@ int main(){
                                                         printf("-----Buscar por ID-----\n");
                                                         printf("Ingrese el ID del producto que dese bsucar:");
                                                         scanf("%i", &idtemp);
-                                                        if (num_articulos[opt2 - 1] != 0) {
-                                                            for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
-                                                                if (idtemp == id[opt2 - 1][i]) {
-                                                                    bandera = 1;
-                                                                }
-                                                            }
-                                                            if (bandera == 1) {
-                                                                printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n",
-                                                                       "ID", "Titulo", "Autor", "Precio", "Existencia",
-                                                                       "Punto de reorden", "Tipo");
-                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |",
-                                                                       id[opt2 - 1][idtemp - 1],
-                                                                       titulo[opt2 - 1][idtemp - 1],
-                                                                       author[opt2 - 1][idtemp - 1],
-                                                                       precio[opt2 - 1][idtemp - 1],
-                                                                       existencia[opt2 - 1][idtemp - 1],
-                                                                       preorden[opt2 - 1][idtemp - 1]);
-                                                                if (tipo[opt2 - 1][idtemp - 1] == 1) {
-                                                                    printf("Pasta dura\n");
-                                                                }
-                                                                if (tipo[opt2 - 1][idtemp - 1] == 2) {
-                                                                    printf("Pasta blanda\n");
-                                                                }
-                                                                if (tipo[opt2 - 1][idtemp - 1] == 3) {
-                                                                    printf("Audio libro\n");
-                                                                }
-                                                                if (tipo[opt2 - 1][idtemp - 1] == 4) {
-                                                                    printf("E-Book\n");
-                                                                }
-                                                            } else {
-                                                                printf("El ID del libro no existe\n");
-                                                            }
+                                                        serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
 
-                                                        } else {
-                                                            printf("El almacen esa vacio\n");
-                                                        }
                                                         break;
                                                     case 3:
                                                         bandera = 0;
@@ -254,35 +316,7 @@ int main(){
                                                         }
 
                                                         if (bandera != 0) {
-                                                            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n",
-                                                                   "ID", "Titulo", "Autor", "Precio", "Existencia",
-                                                                   "Punto de reorden", "Tipo");
-                                                            for (int i = 0; i < ubi; ++i) {
-                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |\n",
-                                                                       id[opt2 - 1][idvec[i]],
-                                                                       titulo[opt2 - 1][idvec[i]],
-                                                                       author[opt2 - 1][idvec[i]],
-                                                                       precio[opt2 - 1][idvec[i]],
-                                                                       existencia[opt2 - 1][idvec[i]],
-                                                                       preorden[opt2 - 1][idvec[i]]);
-
-                                                                switch (tipo[opt2 - 1][idvec[i]]) {
-                                                                    case 1:
-                                                                        printf("Pasta dura\n");
-                                                                        break;
-                                                                    case 2:
-                                                                        printf("Pasta blanda\n");
-                                                                        break;
-                                                                    case 3:
-                                                                        printf("Audio libro\n");
-                                                                        break;
-                                                                    case 4:
-                                                                        printf("E-Book\n");
-                                                                        break;
-                                                                    default:
-                                                                        printf("Desconocido\n");
-                                                                }
-                                                            }
+                                                            printAutoresLibros(ubi, id, titulo, author, precio, existencia, preorden, tipo, opt2, idvec);
                                                         } else {
                                                             printf("No lo tenemos\n");
                                                         }
@@ -309,27 +343,7 @@ int main(){
                                                         }
 
                                                         if (bandera != 0) {
-                                                            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo");
-                                                            for (int i = 0; i < ubi; i++) {
-                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |", id[opt2 - 1][idvec[i]], titulo[opt2 - 1][idvec[i]], author[opt2 - 1][idvec[i]], precio[opt2 - 1][idvec[i]], existencia[opt2 - 1][idvec[i]], preorden[opt2 - 1][idvec[i]]);
-
-                                                                switch (tipo[opt2 - 1][idvec[i]]) {
-                                                                    case 1:
-                                                                        printf("Pasta dura\n");
-                                                                        break;
-                                                                    case 2:
-                                                                        printf("Pasta blanda\n");
-                                                                        break;
-                                                                    case 3:
-                                                                        printf("Audio libro\n");
-                                                                        break;
-                                                                    case 4:
-                                                                        printf("E-Book\n");
-                                                                        break;
-                                                                    default:
-                                                                        printf("Desconocido\n");
-                                                                }
-                                                            }
+                                                            printAutoresLibros(ubi, id, titulo, author, precio, existencia, preorden, tipo, opt2, idvec);
                                                         } else {
                                                             printf("No lo tenemos\n");
                                                         }
@@ -356,27 +370,8 @@ int main(){
                                                             }
                                                         }
                                                         if (bandera != 0) {
-                                                            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo","Almacen");
-                                                            for (int i = 0; i < ubi; i++) {
-                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i | %-25s |", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
-                                                                //Agregar que imprima almacen
-                                                                switch (tipo[almacenvec[i]][idvec[i]]) {
-                                                                    case 1:
-                                                                        printf("Pasta dura\n");
-                                                                        break;
-                                                                    case 2:
-                                                                        printf("Pasta blanda\n");
-                                                                        break;
-                                                                    case 3:
-                                                                        printf("Audio libro\n");
-                                                                        break;
-                                                                    case 4:
-                                                                        printf("E-Book\n");
-                                                                        break;
-                                                                    default:
-                                                                        printf("Desconocido\n");
-                                                                }
-                                                            }
+                                                            printAlmacenes(ubi, id, titulo, author, precio, existencia, preorden, tipo, almacenvec,idvec);
+
                                                         } else {
                                                             printf("No lo tenemos\n");
                                                         }
