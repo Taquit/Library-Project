@@ -234,6 +234,7 @@ int main(){
                                 do {
                                     printf("1)Altas\n2)Ventas x\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar al menu anterior\nEliga opcion:");
                                     scanf("%i",&opt3);
+                                    int encontrado = 0;
                                     switch (opt3) {
                                         case 1:
                                             printf("-----Altas-----\n");
