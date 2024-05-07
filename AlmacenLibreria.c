@@ -232,14 +232,42 @@ int main(){
                                 }
 
                                 do {
-                                    printf("1)Altas\n2)Venetas x\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar al menu anterior\nEliga opcion:");
+                                    printf("1)Altas\n2)Ventas x\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar al menu anterior\nEliga opcion:");
                                     scanf("%i",&opt3);
                                     switch (opt3) {
                                         case 1:
                                             printf("-----Altas-----\n");
                                             break;
                                         case 2:
-                                            printf("-----Venetas-----\n");
+                                            printf("-----Ventas-----\n");
+                                            int idVenta, cantidadVenta;
+                                            printf("Ingrese el ID del producto que desea vender: ");
+                                            scanf("%d", &idVenta);
+                                            printf("Ingrese la cantidad que desea vender: ");
+                                            scanf("%d", &cantidadVenta);
+                                            // Verificar si el producto está en el inventario
+                                            for (int i = 0; i < num_articulos[opt2 - 1]; i++)
+                                            {
+                                                if (idVenta == id[opt2 - 1][i])
+                                                {
+                                                    encontrado = 1;
+                                                    if (existencia[opt2 - 1][i] >= cantidadVenta)
+                                                    {
+                                                        // Actualizar la existencia del producto
+                                                        existencia[opt2 - 1][i] -= cantidadVenta;
+                                                        printf("Venta realizada correctamente.\n");
+                                                    }
+                                                    else
+                                                    {
+                                                        printf("No hay suficiente cantidad en el inventario.\n");
+                                                    }
+                                                    // No hay salto aquí
+                                                }
+                                            }
+                                            if (!encontrado)
+                                            {
+                                                printf("El ID del producto no existe en el inventario.\n");
+                                            }
                                             break;
                                         case 3:
                                             do {
