@@ -6,9 +6,11 @@
 #define MAX_ARTICULOS 50
 
 void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULOS][MAX_LENGTH], char author[][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int almacenvec[MAX_ARTICULOS],int idvec[MAX_ARTICULOS]) {
-    printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo", "Almacen");
+    printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
+           "ID", "Titulo", "Autor", "Precio", "Existencia",
+           "Punto de reorden", "Tipo");
     for (int i = 0; i < ubi; i++) {
-        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
+        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
         //Agregar que imprima almacen
 
         switch (tipo[almacenvec[i]][idvec[i]]) {
@@ -42,9 +44,11 @@ void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULO
     }
 }
 void printAutoresLibros(int ubi, int id[][MAX_ARTICULOS], char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], char author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int opt2, const int idvec[MAX_ARTICULOS]){
-    printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n", "ID", "Titulo", "Autor", "Precio", "Existencia", "Punto de reorden", "Tipo");
+    printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \\n",
+           "ID", "Titulo", "Autor", "Precio", "Existencia",
+           "Punto de reorden", "Tipo");
     for (int i = 0; i < ubi; i++) {
-        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |", id[opt2 - 1][idvec[i]], titulo[opt2 - 1][idvec[i]], author[opt2 - 1][idvec[i]], precio[opt2 - 1][idvec[i]], existencia[opt2 - 1][idvec[i]], preorden[opt2 - 1][idvec[i]]);
+        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ", id[opt2 - 1][idvec[i]], titulo[opt2 - 1][idvec[i]], author[opt2 - 1][idvec[i]], precio[opt2 - 1][idvec[i]], existencia[opt2 - 1][idvec[i]], preorden[opt2 - 1][idvec[i]]);
 
         switch (tipo[opt2 - 1][idvec[i]]) {
             case 1:
@@ -73,17 +77,19 @@ void serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulo
             }
         }
         if (bandera == 1) {
-            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n",
+            printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
                    "ID", "Titulo", "Autor", "Precio", "Existencia",
                    "Punto de reorden", "Tipo");
-            printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |",
+
+            printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ",
                    id[opt2 - 1][idtemp - 1],
                    titulo[opt2 - 1][idtemp - 1],
                    author[opt2 - 1][idtemp - 1],
                    precio[opt2 - 1][idtemp - 1],
                    existencia[opt2 - 1][idtemp - 1],
                    preorden[opt2 - 1][idtemp - 1]);
-            switch (tipo[opt2 - 1][idtemp-1]) {
+
+            switch (tipo[opt2 - 1][idtemp - 1]) {
                 case 1:
                     printf("Pasta dura\n");
                     break;
@@ -225,45 +231,46 @@ int main(){
                         switch (opt2) {
                             case 1:
                             case 2:
-                                if(opt2==1){
-                                    printf("-----ALMACEN PUEBLA-----\n");
-                                }
-                                if(opt2==2){
-                                    printf("-----ALMACEN CDMX-----\n");
-                                }
-
                                 do {
-                                    printf("1)Altas\n2)Ventas x\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar al menu anterior\nEliga opcion:");
+                                    if(opt2==1){
+                                        printf("-----ALMACEN PUEBLA-----\n");
+                                    }
+                                    if(opt2==2){
+                                        printf("-----ALMACEN CDMX-----\n");
+                                    }
+                                    printf("1)Altas\n2)Ventas \n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar al menu anterior\nEliga opcion:");
                                     scanf("%i",&opt3);
                                     int encontrado = 0;
                                     switch (opt3) {
                                         case 1:
-                                            printf("-----Altas-----\n");
-                                            printf("\n\nBienvenido al menu de altas\n\n");
-                                            printf("\nIngrese el nombre del libro:\n");
+                                            printf("\n\n-----Bienvenido al menu de altas-----\n");
+                                            printf("\nIngrese el nombre del libro:");
                                             fflush(stdin); // Limpiar el búfer de entrada
-                                            fgets(titulo[0][num_articulos[0]], sizeof(titulo[0][num_articulos[0]]), stdin);
-                                            if (titulo[0][num_articulos[0]][strlen(titulo[0][num_articulos[0]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
-                                                titulo[0][num_articulos[0]][strlen(titulo[0][num_articulos[0]]) - 1] = '\0';
+                                            fgets(titulo[opt2-1][num_articulos[opt2-1]], sizeof(titulo[opt2-1][num_articulos[opt2-1]]), stdin);
+                                            if (titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                                                titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
                                             }
-                                            printf("\nIngrese el nombre del autor:\n");
-                                            fgets(author[0][num_articulos[0]], sizeof(author[0][num_articulos[0]]), stdin);
-                                            if (author[0][num_articulos[0]][strlen(author[0][num_articulos[0]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
-                                                author[0][num_articulos[0]][strlen(author[0][num_articulos[0]]) - 1] = '\0';
+                                            printf("\nIngrese el nombre del autor:");
+                                            fgets(author[opt2-1][num_articulos[opt2-1]], sizeof(author[0][num_articulos[0]]), stdin);
+                                            if (author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                                                author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
                                             }
-                                            printf("Ingrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\n\n");
-                                            scanf("%d", &tipo[0][num_articulos[0]]);
-                                            printf("\nIngrese el precio:\n");
-                                            scanf("%f", &precio[0][num_articulos[0]]);
-                                            printf("\nIngrese la existencia:\n");
-                                            scanf("%d", &existencia[0][num_articulos[0]]);
-                                            printf("\nIngrese el punto de reorden:\n");
-                                            scanf("%d", &preorden[0][num_articulos[0]]);
-                                            num_articulos[0] = num_articulos[0] + 1;
-                                            printf("\nAlta exitosa\n");
+                                            printf("\nIngrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\nOpcion:");
+                                            scanf("%d", &tipo[opt2-1][num_articulos[opt2-1]]);
+                                            printf("\nIngrese el precio:");
+                                            scanf("%f", &precio[opt2-1][num_articulos[opt2-1]]);
+                                            printf("\nIngrese la existencia:");
+                                            scanf("%d", &existencia[opt2-1][num_articulos[opt2-1]]);
+                                            printf("\nIngrese el punto de reorden:");
+                                            scanf("%d", &preorden[opt2-1][num_articulos[opt2-1]]);
+                                            printf("\nIngrese el maximo:");
+                                            scanf("%d", &maximo[opt2-1][num_articulos[opt2-1]]);
+                                            id[opt2-1][num_articulos[opt2-1]]=num_articulos[opt2-1]+1;
+                                            num_articulos[opt2-1]++;
+                                            printf("\n-----Alta exitosa-----\n\n");
                                             break;
                                         case 2:
-                                            printf("-----Ventas-----\n");
+                                            printf("\n\n-----Ventas-----\n");
                                             int idVenta, cantidadVenta;
                                             printf("Ingrese el ID del producto que desea vender: ");
                                             scanf("%d", &idVenta);
@@ -295,37 +302,41 @@ int main(){
                                             break;
                                         case 3:
                                             do {
-                                                printf("-----Listar/Buscar-----\n");
+                                                printf("\n-----Listar/Buscar-----\n");
                                                 printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Salir\nEliga opcion:");
                                                 scanf("%i",&opt4);
                                                 switch (opt4) {
                                                     case 1:
-                                                        printf("-----Listar Todo-----\n");
+                                                        printf("\n-----Listar Todo-----\n");
                                                         if (num_articulos[opt2 - 1] != 0) {
-                                                            printf("%-5s | %-25s | %-25s | %-12s | %-15s | %-15s | %-25s |\n",
+                                                            printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
                                                                    "ID", "Titulo", "Autor", "Precio", "Existencia",
                                                                    "Punto de reorden", "Tipo");
                                                             for (int i = 0; i < num_articulos[opt2 - 1]; i += 10) {
                                                                 int end = (i + 10 < num_articulos[opt2 - 1]) ? i + 10
                                                                                                              : num_articulos[
                                                                                   opt2 - 1];
-                                                                for (int j = i; j < end; j++) {
-                                                                    printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |\n",
-                                                                           id[opt2 - 1][j], titulo[opt2 - 1][j],
-                                                                           author[opt2 - 1][j], precio[opt2 - 1][j],
-                                                                           existencia[opt2 - 1][j],
-                                                                           preorden[opt2 - 1][j]);
-                                                                    if (tipo[opt2 - 1][j] == 1) {
-                                                                        printf("Pasta dura\n");
-                                                                    }
-                                                                    if (tipo[opt2 - 1][j] == 2) {
-                                                                        printf("Pasta blanda\n");
-                                                                    }
-                                                                    if (tipo[opt2 - 1][j] == 3) {
-                                                                        printf("Audio libro\n");
-                                                                    }
-                                                                    if (tipo[opt2 - 1][j] == 4) {
-                                                                        printf("E-Book\n");
+                                                                for (int j = i; j < end; j++) {//ID: %i|Titulo: %s|Author: %s|Precio: %.2f|Existencia: %i|Punto de reorden: %i|Tipo:%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |
+                                                                    printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ",
+                                                                           id[opt2 - 1][j], titulo[opt2 - 1][j], author[opt2 - 1][j], precio[opt2 - 1][j],
+                                                                           existencia[opt2 - 1][j], preorden[opt2 - 1][j]);
+
+                                                                    switch (tipo[opt2 - 1][j]) {
+                                                                        case 1:
+                                                                            printf("Pasta dura\n");
+                                                                            break;
+                                                                        case 2:
+                                                                            printf("Pasta blanda\n");
+                                                                            break;
+                                                                        case 3:
+                                                                            printf("Audio libro\n");
+                                                                            break;
+                                                                        case 4:
+                                                                            printf("E-Book\n");
+                                                                            break;
+                                                                        default:
+                                                                            printf("Tipo desconocido\n");
+                                                                            break;
                                                                     }
                                                                 }
                                                                 if (end < num_articulos[opt2 - 1]) {
