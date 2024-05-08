@@ -10,6 +10,7 @@ void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULO
     for (int i = 0; i < ubi; i++) {
         printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
         //Agregar que imprima almacen
+
         switch (tipo[almacenvec[i]][idvec[i]]) {
             case 1:
                 printf("Pasta dura\n");
@@ -134,7 +135,7 @@ int main(){
     // Inicialización de los datos de los libros para Puebla
     id[0][0] = 1;
     preorden[0][0] = 20;
-    existencia[0][0] = 10;
+    existencia[0][0] = 5;
     maximo[0][0] = 50;
     pedido[0][0] = 0;
     tipo[0][0] = 1;
@@ -238,6 +239,28 @@ int main(){
                                     switch (opt3) {
                                         case 1:
                                             printf("-----Altas-----\n");
+                                            printf("\n\nBienvenido al menu de altas\n\n");
+                                            printf("\nIngrese el nombre del libro:\n");
+                                            fflush(stdin); // Limpiar el búfer de entrada
+                                            fgets(titulo[0][num_articulos[0]], sizeof(titulo[0][num_articulos[0]]), stdin);
+                                            if (titulo[0][num_articulos[0]][strlen(titulo[0][num_articulos[0]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                                                titulo[0][num_articulos[0]][strlen(titulo[0][num_articulos[0]]) - 1] = '\0';
+                                            }
+                                            printf("\nIngrese el nombre del autor:\n");
+                                            fgets(author[0][num_articulos[0]], sizeof(author[0][num_articulos[0]]), stdin);
+                                            if (author[0][num_articulos[0]][strlen(author[0][num_articulos[0]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                                                author[0][num_articulos[0]][strlen(author[0][num_articulos[0]]) - 1] = '\0';
+                                            }
+                                            printf("Ingrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\n\n");
+                                            scanf("%d", &tipo[0][num_articulos[0]]);
+                                            printf("\nIngrese el precio:\n");
+                                            scanf("%f", &precio[0][num_articulos[0]]);
+                                            printf("\nIngrese la existencia:\n");
+                                            scanf("%d", &existencia[0][num_articulos[0]]);
+                                            printf("\nIngrese el punto de reorden:\n");
+                                            scanf("%d", &preorden[0][num_articulos[0]]);
+                                            num_articulos[0] = num_articulos[0] + 1;
+                                            printf("\nAlta exitosa\n");
                                             break;
                                         case 2:
                                             printf("-----Ventas-----\n");
@@ -419,6 +442,40 @@ int main(){
                                             break;
                                         case 5:
                                             printf("-----Reabastecer-----\n");
+                                            int	maybe = 0,existencia_temp;
+                                            bandera=0;
+                                            for (int i = 0;i< num_articulos[opt2 - 1]; i++) {
+
+                                                if (existencia[opt2 - 1][i] < preorden[opt2 - 1][i]) {
+                                                    bandera = 1;
+                                                    idvec[ubi] = i;
+                                                    ubi++;
+                                                }
+                                            }
+                                            if (bandera == 1){
+
+                                                for (int i = 0;i < ubi; i++){
+                                                    existencia_temp = maximo[opt2-1][i]-existencia[opt2-1][i];
+                                                    printf("ID: %i|Titulo: %s|Existencia: %i| \n", id[opt2-1][i], titulo[opt2-1][i], existencia_temp);
+                                                    printf("Quieres reabastecer?\n 1. Si\n 2. No\n");
+                                                    printf("Elegir opcion:");
+                                                    scanf("%i", &maybe);
+                                                    if(maybe == 1){
+                                                        existencia[opt2-1][i] = existencia_temp + existencia[opt2-1][i];
+                                                        printf("Si se reabastecio\n");
+                                                    }else{
+                                                        printf("No se reabastecio\n");
+                                                    }
+
+                                                }
+
+                                            }else{
+                                                printf("No hay nada que reabastecer\n");
+                                            }
+
+
+
+
                                             break;
                                         case 6:
                                             printf("Regresando al menu anterior\n");
