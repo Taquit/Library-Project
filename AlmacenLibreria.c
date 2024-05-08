@@ -6,28 +6,28 @@
 #define MAX_ARTICULOS 50
 
 void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULOS][MAX_LENGTH], char author[][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int almacenvec[MAX_ARTICULOS],int idvec[MAX_ARTICULOS]) {
-    printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
+    printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s|%-20s \n",
            "ID", "Titulo", "Autor", "Precio", "Existencia",
-           "Punto de reorden", "Tipo");
+           "Punto de reorden", "Tipo","Almacen");
     for (int i = 0; i < ubi; i++) {
         printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ", id[almacenvec[i]][idvec[i]], titulo[almacenvec[i]][idvec[i]], author[almacenvec[i]][idvec[i]], precio[almacenvec[i]][idvec[i]], existencia[almacenvec[i]][idvec[i]], preorden[almacenvec[i]][idvec[i]]);
         //Agregar que imprima almacen
 
         switch (tipo[almacenvec[i]][idvec[i]]) {
             case 1:
-                printf("Pasta dura\n");
+                printf("%-20s |","Pasta dura");
                 break;
             case 2:
-                printf("Pasta blanda\n");
+                printf("%-20s |","Pasta blanda");
                 break;
             case 3:
-                printf("Audio libro\n");
+                printf("%-20s |","Audio libro");
                 break;
             case 4:
-                printf("E-Book\n");
+                printf("%-20s |","E-Book");
                 break;
             default:
-                printf("Desconocido\n");
+                printf("Desconocido");
                 break;
         }
         switch (almacenvec[i]) {
@@ -44,11 +44,11 @@ void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULO
     }
 }
 void printAutoresLibros(int ubi, int id[][MAX_ARTICULOS], char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], char author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int opt2, const int idvec[MAX_ARTICULOS]){
-    printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \\n",
+    printf("%-5s |%-25s |%-25s |%-10s |%-12s |%-15s |%-20s \n",
            "ID", "Titulo", "Autor", "Precio", "Existencia",
            "Punto de reorden", "Tipo");
     for (int i = 0; i < ubi; i++) {
-        printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ", id[opt2 - 1][idvec[i]], titulo[opt2 - 1][idvec[i]], author[opt2 - 1][idvec[i]], precio[opt2 - 1][idvec[i]], existencia[opt2 - 1][idvec[i]], preorden[opt2 - 1][idvec[i]]);
+        printf("%-5i |%-25s |%-25s |%-10.2f |%-12i |%-15i | ", id[opt2 - 1][idvec[i]], titulo[opt2 - 1][idvec[i]], author[opt2 - 1][idvec[i]], precio[opt2 - 1][idvec[i]], existencia[opt2 - 1][idvec[i]], preorden[opt2 - 1][idvec[i]]);
 
         switch (tipo[opt2 - 1][idvec[i]]) {
             case 1:
@@ -77,11 +77,9 @@ void serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulo
             }
         }
         if (bandera == 1) {
-            printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
-                   "ID", "Titulo", "Autor", "Precio", "Existencia",
-                   "Punto de reorden", "Tipo");
+            printf("%-5s |%-25s |%-25s |%-10s |%-12s |%-15s |%-20s \n","ID", "Titulo", "Autor", "Precio", "Existencia","Punto de reorden", "Tipo");
 
-            printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ",
+            printf("%-5i |%-25s |%-25s |%-10.2f |%-12i |%-15i | ",
                    id[opt2 - 1][idtemp - 1],
                    titulo[opt2 - 1][idtemp - 1],
                    author[opt2 - 1][idtemp - 1],
@@ -119,6 +117,8 @@ int main(){
     //Variables basura
     int bandera=0,idtemp,ubi=0,idvec[MAX_ARTICULOS],almacenvec[MAX_ARTICULOS];
     char trytitulo[MAX_LENGTH];
+    //Variables de Rodo
+    int opc=0, opp=0, tipotemp=0, tipod;
     //Variables para Switch cases
     int opt1=0,opt2=0,opt3=0,opt4=0;
     //Usuario y Contraseña
@@ -140,9 +140,9 @@ int main(){
 
     // Inicialización de los datos de los libros para Puebla
     id[0][0] = 1;
-    preorden[0][0] = 20;
+    preorden[0][0] = 10;
     existencia[0][0] = 5;
-    maximo[0][0] = 50;
+    maximo[0][0] =20;
     pedido[0][0] = 0;
     tipo[0][0] = 1;
     precio[0][0] = 15.99;
@@ -151,7 +151,7 @@ int main(){
 
     id[0][1] = 2;
     preorden[0][1] = 20;
-    existencia[0][1] = 10;
+    existencia[0][1] = 21;
     maximo[0][1] = 50;
     pedido[0][1] = 0;
     tipo[0][1] = 2;
@@ -160,9 +160,9 @@ int main(){
     strcpy(author[0][1], "Autor1");
 
     id[0][2] = 3;
-    preorden[0][2] = 20;
-    existencia[0][2] = 10;
-    maximo[0][2] = 50;
+    preorden[0][2] = 10;
+    existencia[0][2] = 1;
+    maximo[0][2] = 30;
     pedido[0][2] = 0;
     tipo[0][2] = 4;
     precio[0][2] = 29.99;
@@ -226,7 +226,7 @@ int main(){
                         break;
                     }
                     do {
-                        printf("-----ELIGA ALMACEN-----\n1)Almacen Pubela\n2)Almacen CDMX\n3)Regresar al menu anterior\nEliga opcion:");
+                        printf("-----ELIGA ALMACEN-----\n1)Almacen Pubela\n2)Almacen CDMX\n3)Regresar al inicio de sesion\nEliga opcion:");
                         scanf("%i",&opt2);
                         switch (opt2) {
                             case 1:
@@ -238,7 +238,7 @@ int main(){
                                     if(opt2==2){
                                         printf("-----ALMACEN CDMX-----\n");
                                     }
-                                    printf("1)Altas\n2)Ventas \n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar al menu anterior\nEliga opcion:");
+                                    printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas \n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar a la selecion de almacenes\n7)Salir del programa\nEliga opcion:");
                                     scanf("%i",&opt3);
                                     int encontrado = 0;
                                     switch (opt3) {
@@ -257,6 +257,12 @@ int main(){
                                             }
                                             printf("\nIngrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\nOpcion:");
                                             scanf("%d", &tipo[opt2-1][num_articulos[opt2-1]]);
+                                            tipotemp=tipo[opt2 - 1][num_articulos[opt2-1]];
+                                            if(tipotemp>0 && tipotemp<5){
+                                            }else
+                                            {
+                                                printf("No se reconoce el valor ingresado. . .\nSera registrado como desconocido\n");
+                                            }
                                             printf("\nIngrese el precio:");
                                             scanf("%f", &precio[opt2-1][num_articulos[opt2-1]]);
                                             printf("\nIngrese la existencia:");
@@ -303,7 +309,7 @@ int main(){
                                         case 3:
                                             do {
                                                 printf("\n-----Listar/Buscar-----\n");
-                                                printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Salir\nEliga opcion:");
+                                                printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Regresar al menu principal\nEliga opcion:");
                                                 scanf("%i",&opt4);
                                                 switch (opt4) {
                                                     case 1:
@@ -440,7 +446,7 @@ int main(){
                                                         }
                                                         break;
                                                     case 6:
-                                                        printf("Saliendo del menu 3...\n");
+                                                        printf("Regresando al menu principal...\n");
                                                         break;
                                                     default:
                                                         printf("<----->Ingresaste una opcion incorrecta<----->\n");
@@ -450,10 +456,85 @@ int main(){
                                             break;
                                         case 4:
                                             printf("-----Modificaciones-----\n");
+                                            bandera=0;
+                                            printf("Ingresa el ID del libro supuesto a modificaciones:");
+                                            scanf("%i", &idtemp);
+                                            serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
+                                            printf("Que dato desaeas cambiar?\n1)Titulo\n2)Autor\n3)Tipo de libro\n4)Precio\n5)Existencia\n6)Punto de reorden\n7)Regresar al menu principal\n");
+                                            printf("\tSelecciona una opcion: ");
+                                            scanf("%i", &opc);
+
+                                            switch(opc){
+                                                case 1:
+                                                    printf("-----Cambiar Titulo-----\n");
+                                                    printf("Ingresa Titulo del libro:");
+                                                    fflush(stdin);
+                                                    fgets(titulo[opt2 - 1][idtemp - 1], sizeof(titulo[opt2 - 1][idtemp - 1]), stdin);
+                                                    if (titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] == '\n') {
+                                                        titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] = '\0';
+
+                                                        printf("\tCambio realizado con exito\n");
+                                                    }
+
+                                                    break;
+
+                                                case 2:printf("-----Cambiar Autor-----\n");
+                                                    printf("Ingresa el nombre de autor:");
+                                                    fflush(stdin);
+                                                    fgets(author[opt2 - 1][idtemp - 1], sizeof(author[opt2 - 1][idtemp - 1]), stdin);
+                                                    if (author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] == '\n') {
+                                                        author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] = '\0';
+                                                    }
+
+                                                    break;
+
+                                                case 3:printf("-----Cambiar Tipo de pasta-----\n");
+                                                    tipod=tipo[opt2 - 1][idtemp - 1];
+                                                    printf("Selecciona el tipo de pasta:\n1)Pasta dura\n2)Pasta blanda\n3)Audiolibro\n4)e-book\n\tSelecciona una opcion:");
+                                                    scanf("%i", &tipo[opt2 - 1][idtemp - 1]);
+                                                    tipotemp=tipo[opt2 - 1][idtemp - 1];
+                                                    if(tipotemp>0 && tipotemp<5){
+                                                        printf("\tCambio realizado con exito\n");
+                                                    }else
+                                                    {
+                                                        printf("No se reconoce el valor ingresado. . .\nNo se cambiara el valor\n");
+                                                        tipo[opt2 - 1][idtemp - 1]=tipod;
+                                                    }
+                                                    break;
+
+                                                case 4:printf("-----Cambiar Precio----\n");
+                                                    printf("Ingresa el precio:");
+                                                    scanf("%f", &precio[opt2 - 1][idtemp - 1]);
+                                                    printf("\tCambio realizado con exito\n");
+                                                    break;
+
+                                                case 5:printf("-----Cambiar Existencia-----\n");
+                                                    printf("Ingresa la existencia:");
+                                                    scanf("%i", &existencia[opt2 - 1][idtemp - 1]);
+                                                    printf("\tCambio realizado con exito\n");
+                                                    break;
+
+                                                case 6:printf("-----Cambiar Punto de Reorden-----\n");
+                                                    printf("Ingresa el punto de reorden:");
+                                                    scanf("%i", &preorden[opt2 - 1][idtemp - 1]);
+                                                    printf("\tCambio realizado con exito\n");
+                                                    break;
+
+                                                case 7:printf("-----Regreso al menu 3-----\n");
+
+                                                    printf("Regresando. . .\n");
+                                                    break;
+
+                                                default:
+                                                    printf("<----->Selecciona una opcion valida<----->\n");
+                                                    break;
+                                            }
+
                                             break;
                                         case 5:
                                             printf("-----Reabastecer-----\n");
                                             int	maybe = 0,existencia_temp;
+                                            float totalPagar=0;
                                             bandera=0;
                                             for (int i = 0;i< num_articulos[opt2 - 1]; i++) {
 
@@ -463,45 +544,56 @@ int main(){
                                                     ubi++;
                                                 }
                                             }
+
                                             if (bandera == 1){
-
+                                                printf("%-5s | %-25s| %-10s| %-10s\n","ID","Titulo","Pedir","Costo");
                                                 for (int i = 0;i < ubi; i++){
-                                                    existencia_temp = maximo[opt2-1][i]-existencia[opt2-1][i];
-                                                    printf("ID: %i|Titulo: %s|Existencia: %i| \n", id[opt2-1][i], titulo[opt2-1][i], existencia_temp);
-                                                    printf("Quieres reabastecer?\n 1. Si\n 2. No\n");
-                                                    printf("Elegir opcion:");
-                                                    scanf("%i", &maybe);
-                                                    if(maybe == 1){
-                                                        existencia[opt2-1][i] = existencia_temp + existencia[opt2-1][i];
-                                                        printf("Si se reabastecio\n");
-                                                    }else{
-                                                        printf("No se reabastecio\n");
-                                                    }
+                                                    existencia_temp = maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
 
+                                                    printf("%-5i | %-25s| %-10i| %-10.2f \n", id[opt2-1][idvec[i]], titulo[opt2-1][idvec[i]], existencia_temp,existencia_temp*precio[opt2-1][idvec[i]]);
+                                                    totalPagar=totalPagar+(precio[opt2-1][idvec[i]]*(existencia_temp));
                                                 }
-
+                                                printf("El total a pagar por reabastecer todo es %.2f pesos\n1)Reabastecer todo\n2)Reabastecer por ID\nElegir opcion:",totalPagar);
+                                                scanf("%i", &maybe);
+                                                switch (maybe) {
+                                                    case 1:
+                                                        for (int i = 0; i < ubi; ++i) {
+                                                            pedido[opt2-1][idvec[i]]=maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
+                                                            existencia[opt2-1][idvec[i]] = pedido[opt2-1][idvec[i]]+existencia[opt2-1][idvec[i]];
+                                                        }
+                                                        printf("Se reabastecio exitosamente\n");
+                                                        break;
+                                                    case 2:
+                                                        printf("Ingrese ID:");
+                                                        scanf("%i",&idtemp);
+                                                        pedido[opt2-1][idtemp-1]=maximo[opt2-1][idtemp-1]-existencia[opt2-1][idtemp-1];
+                                                        existencia[opt2-1][idtemp-1] = pedido[opt2-1][idtemp-1]+existencia[opt2-1][idtemp-1];
+                                                        printf("Se reabastecio exitosamente\n");
+                                                        break;
+                                                    default:
+                                                        printf("------Opcion invalida-----");
+                                                        break;
+                                                }
                                             }else{
                                                 printf("No hay nada que reabastecer\n");
                                             }
-
-
-
-
                                             break;
                                         case 6:
-                                            printf("Regresando al menu anterior\n");
+                                            printf("Regresando a la selecion de almacenes...\n");
                                             break;
+                                        case 7:
+                                            return 0;
                                         default:
-                                            printf("<----->Ingresaste una opcion incorrecta<----->\n");
+                                            printf("<----->Ingresaste una opcion invalida<----->\n");
                                             break;
                                     }
                                 } while (opt3!=6);
                                 break;
                             case 3:
-                                printf("-----Regresar al menu anterior-----\n");
+                                printf("-----Regresando al inicio de sesion...-----\n");
                                 break;
                             default:
-                                printf("<----->Ingresaste una opcion incorrecta<----->\n");
+                                printf("<----->Ingresaste una opcion invalida<----->\n");
                                 break;
 
                         }
@@ -512,7 +604,7 @@ int main(){
                     printf("Estas saliendo del progrma...\n");
                     break;
                 default:
-                    printf("<----->Ingresaste una opcion incorrecta<----->\n");
+                    printf("<----->Ingresaste una opcion invalida<----->\n");
                     break;
             }
         } while (opt1!=2);
