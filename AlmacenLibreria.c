@@ -779,7 +779,7 @@ int main(){
                                             break;
                                         case 7:
                                             printf("Regresando a la seleccion de almacenes...\n");
-
+                                            break;
                                         case 8:
                                             printf("Saliendo del programa...");
                                             return 0;
