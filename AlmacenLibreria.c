@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #define MAX_LENGTH 25
 #define MAX_ALMACENES 5
 #define MAX_ARTICULOS 50
-
+void convertirMayusculas(char *cadena) {
+    int i;
+    for(i = 0; cadena[i]; i++) {
+        cadena[i] = toupper(cadena[i]);
+    }
+}
 void printAlmacenes(int ubi, int id[][MAX_ARTICULOS], char titulo[][MAX_ARTICULOS][MAX_LENGTH], char author[][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS], int almacenvec[MAX_ARTICULOS],int idvec[MAX_ARTICULOS]) {
     printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s|%-20s \n",
            "ID", "Titulo", "Autor", "Precio", "Existencia",
@@ -137,63 +143,222 @@ int main(){
     float precio[MAX_ALMACENES][MAX_ARTICULOS];
     char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH],author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH];
 
-    // Inicialización de los datos de los libros para Puebla
+    /////////// LIBRO DE PUEBLA
+    // Libro 1
     id[0][0] = 1;
-    preorden[0][0] = 10;
-    existencia[0][0] = 5;
-    maximo[0][0] =20;
+    preorden[0][0] = 15;
+    existencia[0][0] = 10;
+    maximo[0][0] = 30;
     pedido[0][0] = 0;
     tipo[0][0] = 1;
-    precio[0][0] = 15.99;
-    strcpy(titulo[0][0], "GOT");
-    strcpy(author[0][0], "Autor1");
+    precio[0][0] = 20.50;
+    strcpy(titulo[0][0], "EL PRINCIPITO");
+    strcpy(author[0][0], "ANTOINE DE SAINT");
 
+    // Libro 2
     id[0][1] = 2;
-    preorden[0][1] = 20;
-    existencia[0][1] = 21;
-    maximo[0][1] = 50;
+    preorden[0][1] = 25;
+    existencia[0][1] = 20;
+    maximo[0][1] = 40;
     pedido[0][1] = 0;
     tipo[0][1] = 2;
-    precio[0][1] = 19.99;
-    strcpy(titulo[0][1], "HarryPT");
-    strcpy(author[0][1], "Autor1");
+    precio[0][1] = 15.75;
+    strcpy(titulo[0][1], "1984");
+    strcpy(author[0][1], "GEORGE ORWELL");
 
+    // Libro 3
     id[0][2] = 3;
-    preorden[0][2] = 10;
-    existencia[0][2] = 1;
-    maximo[0][2] = 30;
+    preorden[0][2] = 30;
+    existencia[0][2] = 15;
+    maximo[0][2] = 50;
     pedido[0][2] = 0;
-    tipo[0][2] = 4;
-    precio[0][2] = 29.99;
-    strcpy(titulo[0][2], "HarryPT");
-    strcpy(author[0][2], "Autor2");
+    tipo[0][2] = 3;
+    precio[0][2] = 12.99;
+    strcpy(titulo[0][2], "CIEN ANOS DE SOLEDAD");
+    strcpy(author[0][2], "GABRIEL GARCIA MARQUEZ");
 
+    // Libro 4
+    id[0][3] = 4;
+    preorden[0][3] = 20;
+    existencia[0][3] = 5;
+    maximo[0][3] = 25;
+    pedido[0][3] = 0;
+    tipo[0][3] = 2;
+    precio[0][3] = 18.50;
+    strcpy(titulo[0][3], "MATAR UN RUISENOR");
+    strcpy(author[0][3], "HARPER LEE");
+
+    // Libro 5
+    id[0][4] = 5;
+    preorden[0][4] = 10;
+    existencia[0][4] = 8;
+    maximo[0][4] = 20;
+    pedido[0][4] = 0;
+    tipo[0][4] = 4;
+    precio[0][4] = 24.99;
+    strcpy(titulo[0][4], "ORGULLO Y PREJUICIO");
+    strcpy(author[0][4], "JANE AUSTEN");
+
+    // Libro 6
+    id[0][5] = 6;
+    preorden[0][5] = 18;
+    existencia[0][5] = 12;
+    maximo[0][5] = 35;
+    pedido[0][5] = 0;
+    tipo[0][5] = 3;
+    precio[0][5] = 21.00;
+    strcpy(titulo[0][5], "MUERTE ANUNCIADA");
+    strcpy(author[0][5], "GABRIEL GARCIA MARQUEZ");
+
+    // Libro 7
+    id[0][6] = 7;
+    preorden[0][6] = 22;
+    existencia[0][6] = 18;
+    maximo[0][6] = 30;
+    pedido[0][6] = 0;
+    tipo[0][6] = 1;
+    precio[0][6] = 16.75;
+    strcpy(titulo[0][6], "EL HOBBIT");
+    strcpy(author[0][6], "J.R.R TOLKIEN");
+
+    // Libro 8
+    id[0][7] = 8;
+    preorden[0][7] = 28;
+    existencia[0][7] = 25;
+    maximo[0][7] = 40;
+    pedido[0][7] = 0;
+    tipo[0][7] = 4;
+    precio[0][7] = 19.99;
+    strcpy(titulo[0][7], "MOBY DICK");
+    strcpy(author[0][7], "HERMAN MELVILLE");
+
+    // Libro 9
+    id[0][8] = 9;
+    preorden[0][8] = 12;
+    existencia[0][8] = 7;
+    maximo[0][8] = 15;
+    pedido[0][8] = 0;
+    tipo[0][8] = 2;
+    precio[0][8] = 23.25;
+    strcpy(titulo[0][8], "TO KILL A MOCKINGBIRD");
+    strcpy(author[0][8], "HARPER LEE");
+
+    // Libro 10
+    id[0][9] = 10;
+    preorden[0][9] = 35;
+    existencia[0][9] = 30;
+    maximo[0][9] = 45;
+    pedido[0][9] = 0;
+    tipo[0][9] = 3;
+    precio[0][9] = 17.50;
+    strcpy(titulo[0][9], "THE GREAT GATSBY");
+    strcpy(author[0][9], "F.SCOTT FITZGERALD");
     // Incrementar el contador de artículos para el almacén de Puebla
-    num_articulos[0] = 3;
+    num_articulos[0] = 10;
 
-    // Inicialización de los datos de los libros para CDMX
+    /////////// LIBRO DE CDMX
     id[1][0] = 1;
-    preorden[1][0] = 200;
-    existencia[1][0] = 70;
-    maximo[1][0] = 120;
-    pedido[1][0] = 25;
+    preorden[1][0] = 15;
+    existencia[1][0] = 10;
+    maximo[1][0] = 30;
+    pedido[1][0] = 0;
     tipo[1][0] = 1;
-    precio[1][0] = 12.99;
-    strcpy(titulo[1][0], "GOT");
-    strcpy(author[1][0], "Autor CDMX 1");
+    precio[1][0] = 20.50;
+    strcpy(titulo[1][0], "EL PRINCIPITO");
+    strcpy(author[1][0], "ANTOINE DE SAINT");
 
     id[1][1] = 2;
-    preorden[1][1] = 300;
-    existencia[1][1] = 80;
-    maximo[1][1] = 120;
-    pedido[1][1] = 25;
+    preorden[1][1] = 25;
+    existencia[1][1] = 15;
+    maximo[1][1] = 40;
+    pedido[1][1] = 0;
     tipo[1][1] = 1;
-    precio[1][1] = 122.99;
-    strcpy(titulo[1][1], "Libro CDMX 1");
-    strcpy(author[1][1], "Autor CDMX 2");
+    precio[1][1] = 15.75;
+    strcpy(titulo[1][1], "HP PIEDRA FILOSOFAL");
+    strcpy(author[1][1], "J.K. ROWLING");
+
+    id[1][2] = 3;
+    preorden[1][2] = 10;
+    existencia[1][2] = 5;
+    maximo[1][2] = 20;
+    pedido[1][2] = 0;
+    tipo[1][2] = 1;
+    precio[1][2] = 18.99;
+    strcpy(titulo[1][2], "CREPUSCULO");
+    strcpy(author[1][2], "STEPHENIE ");
+
+    id[1][3] = 4;
+    preorden[1][3] = 20;
+    existencia[1][3] = 12;
+    maximo[1][3] = 25;
+    pedido[1][3] = 0;
+    tipo[1][3] = 1;
+    precio[1][3] = 22.00;
+    strcpy(titulo[1][3], "EL CODIGO DA VINCI");
+    strcpy(author[1][3], "DAN BROWN");
+
+    id[1][4] = 5;
+    preorden[1][4] = 30;
+    existencia[1][4] = 20;
+    maximo[1][4] = 35;
+    pedido[1][4] = 0;
+    tipo[1][4] = 1;
+    precio[1][4] = 19.95;
+    strcpy(titulo[1][4], "1984");
+    strcpy(author[1][4], "GEORGE ORWELL");
+
+    id[1][5] = 6;
+    preorden[1][5] = 18;
+    existencia[1][5] = 8;
+    maximo[1][5] = 22;
+    pedido[1][5] = 0;
+    tipo[1][5] = 1;
+    precio[1][5] = 16.50;
+    strcpy(titulo[1][5], "LOS JUEGOS DEL");
+    strcpy(author[1][5], "SUZANNE COLLINS");
+
+    id[1][6] = 7;
+    preorden[1][6] = 12;
+    existencia[1][6] = 6;
+    maximo[1][6] = 18;
+    pedido[1][6] = 0;
+    tipo[1][6] = 1;
+    precio[1][6] = 21.25;
+    strcpy(titulo[1][6], "CIEN ANOS DE SOLEDAD");
+    strcpy(author[1][6], "GABRIEL GARCIA MARQUEZ");
+
+    id[1][7] = 8;
+    preorden[1][7] = 8;
+    existencia[1][7] = 4;
+    maximo[1][7] = 15;
+    pedido[1][7] = 0;
+    tipo[1][7] = 1;
+    precio[1][7] = 17.99;
+    strcpy(titulo[1][7], "CINCUENTA SOMBRAS GREY");
+    strcpy(author[1][7], "E.L. JAMES");
+
+    id[1][8] = 9;
+    preorden[1][8] = 22;
+    existencia[1][8] = 18;
+    maximo[1][8] = 28;
+    pedido[1][8] = 0;
+    tipo[1][8] = 1;
+    precio[1][8] = 23.75;
+    strcpy(titulo[1][8], "EL ALQUIMISTA");
+    strcpy(author[1][8], "PAULO COELHO");
+
+    id[1][9] = 10;
+    preorden[1][9] = 17;
+    existencia[1][9] = 11;
+    maximo[1][9] = 20;
+    pedido[1][9] = 0;
+    tipo[1][9] = 1;
+    precio[1][9] = 20.99;
+    strcpy(titulo[1][9], "LA SOMBRA DEL");
+    strcpy(author[1][9], "CARLOS RUIZ ZAFON");
 
     // Incrementar el contador de artículos para el almacén de CDMX
-    num_articulos[1] = 2;
+    num_articulos[1] = 10;
 
 
         do {
@@ -207,7 +372,7 @@ int main(){
                     if (tryuser[strlen(tryuser) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
                         tryuser[strlen(tryuser) - 1] = '\0';
                     }
-                    printf("Password: ");
+                    printf("Password:");
 
                     fflush(stdin);// Limpiar el búfer de entrada
                     fgets(trypassword, sizeof(trypassword), stdin);
@@ -237,7 +402,7 @@ int main(){
                                     if(opt2==2){
                                         printf("-----ALMACEN CDMX-----\n");
                                     }
-                                    printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas \n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar a la seleccion de almacenes\n7)Salir del programa\nEliga opcion:");
+                                    printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Bajas\n7)Regresar a la seleccion de almacenes\n8)Salir del programa\nEliga opcion:");
                                     scanf("%i",&opt3);
                                     int encontrado = 0;
                                     switch (opt3) {
@@ -249,11 +414,13 @@ int main(){
                                             if (titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
                                                 titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
                                             }
+                                            convertirMayusculas(titulo[opt2-1][num_articulos[opt2-1]]);
                                             printf("\nIngrese el nombre del autor:");
                                             fgets(author[opt2-1][num_articulos[opt2-1]], sizeof(author[0][num_articulos[0]]), stdin);
                                             if (author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
                                                 author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
                                             }
+                                            convertirMayusculas(author[opt2-1][num_articulos[opt2-1]]);
                                             printf("\nIngrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\nOpcion:");
                                             scanf("%d", &tipo[opt2-1][num_articulos[opt2-1]]);
                                             tipotemp=tipo[opt2 - 1][num_articulos[opt2-1]];
@@ -374,7 +541,7 @@ int main(){
                                                             '\n') { //Limpiar el ultimo caracter ingresado
                                                             trytitulo[strlen(trytitulo) - 1] = '\0';
                                                         }
-
+                                                        convertirMayusculas(trytitulo);
                                                         for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
                                                             if (strcmp(trytitulo, titulo[opt2 - 1][i]) == 0) {
                                                                 bandera = 1;
@@ -401,6 +568,7 @@ int main(){
                                                             '\n') { //Limpiar el ultimo caracter ingresado
                                                             trytitulo[strlen(trytitulo) - 1] = '\0';
                                                         }
+                                                        convertirMayusculas(trytitulo);
                                                         for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
                                                             if (strcmp(trytitulo, author[opt2 - 1][i]) == 0) {
                                                                 bandera = 1;
@@ -427,6 +595,7 @@ int main(){
                                                             '\n') { //Limpiar el ultimo caracter ingresado
                                                             trytitulo[strlen(trytitulo) - 1] = '\0';
                                                         }
+                                                        convertirMayusculas(trytitulo);
                                                         for (int i = 0; i < MAX_ALMACENES; ++i) {
                                                             for (int j = 0; j < num_articulos[i]; ++j) {
                                                                 if (strcmp(trytitulo, author[i][j]) == 0||strcmp(trytitulo, titulo[i][j])==0) {
@@ -471,10 +640,9 @@ int main(){
                                                     fgets(titulo[opt2 - 1][idtemp - 1], sizeof(titulo[opt2 - 1][idtemp - 1]), stdin);
                                                     if (titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] == '\n') {
                                                         titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] = '\0';
-
-                                                        printf("\tCambio realizado con exito\n");
                                                     }
-
+                                                    convertirMayusculas(titulo[opt2 - 1][idtemp - 1]);
+                                                    printf("\tCambio realizado con exito\n");
                                                     break;
 
                                                 case 2:printf("-----Cambiar Autor-----\n");
@@ -484,7 +652,8 @@ int main(){
                                                     if (author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] == '\n') {
                                                         author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] = '\0';
                                                     }
-
+                                                    convertirMayusculas(author[opt2 - 1][idtemp - 1]);
+                                                    printf("\tCambio realizado con exito\n");
                                                     break;
 
                                                 case 3:printf("-----Cambiar tipo de pasta-----\n");
@@ -578,15 +747,47 @@ int main(){
                                             }
                                             break;
                                         case 6:
-                                            printf("Regresando a la seleccion de almacenes...\n");
+                                            printf("-----Bajas-----\n");
+                                            idVenta=0, cantidadVenta=0;
+                                            printf("Ingrese el ID del producto que desea dar de baja: ");
+                                            scanf("%d", &idVenta);
+                                            printf("Ingrese la cantidad que desea dar de baja: ");
+                                            scanf("%d", &cantidadVenta);
+                                            // Verificar si el producto está en el inventario
+                                            for (int i = 0; i < num_articulos[opt2 - 1]; i++)
+                                            {
+                                                if (idVenta == id[opt2 - 1][i])
+                                                {
+                                                    encontrado = 1;
+                                                    if (existencia[opt2 - 1][i] >= cantidadVenta)
+                                                    {
+                                                        // Actualizar la existencia del producto
+                                                        existencia[opt2 - 1][i] -= cantidadVenta;
+                                                        printf("Baja realizada correctamente.\n");
+                                                    }
+                                                    else
+                                                    {
+                                                        printf("La cantidad dada es mayor a la cantidad en existencia.\n");
+                                                    }
+                                                    // No hay salto aquí
+                                                }
+                                            }
+                                            if (!encontrado)
+                                            {
+                                                printf("El ID del producto no existe en el inventario.\n");
+                                            }
                                             break;
                                         case 7:
+                                            printf("Regresando a la seleccion de almacenes...\n");
+
+                                        case 8:
+                                            printf("Saliendo del programa...");
                                             return 0;
                                         default:
                                             printf("<----->Ingresaste una opcion invalida<----->\n");
                                             break;
                                     }
-                                } while (opt3!=6);
+                                } while (opt3!=7);
                                 break;
                             case 3:
                                 printf("-----Regresando al inicio de sesion...-----\n");
