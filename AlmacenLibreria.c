@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 #define MAX_LENGTH 25
@@ -109,7 +108,7 @@ void serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulo
         }
 
     } else {
-        printf("El almacen esa vacio\n");
+        printf("El almacen esta vacio\n");
     }
 }
 
@@ -122,8 +121,8 @@ int main(){
     //Variables para Switch cases
     int opt1=0,opt2=0,opt3=0,opt4=0;
     //Usuario y Contraseña
-    char user[][MAX_LENGTH]={"Ruben03","Other user"};
-    char password[][MAX_LENGTH]={"Gato123","Other pass"};
+    char user[][MAX_LENGTH]={"usuario123","almacen123"};
+    char password[][MAX_LENGTH]={"usuario456","almacen456"};
     char trypassword[MAX_LENGTH];
     char tryuser[MAX_LENGTH];
     //Vectores
@@ -198,17 +197,17 @@ int main(){
 
 
         do {
-            printf("1)Iinciar sesion\n2)Salir del almacen\nEliga opcion:");
+            printf("1)Iniciar sesion\n2)Salir del almacen\nElija opcion:");
             scanf("%i",&opt1);
             switch (opt1) {
                 case 1:
-                    printf("User:");
+                    printf("User: ");
                     fflush(stdin); // Limpiar el búfer de entrada
                     fgets(tryuser, sizeof(tryuser), stdin);
                     if (tryuser[strlen(tryuser) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
                         tryuser[strlen(tryuser) - 1] = '\0';
                     }
-                    printf("Password:");
+                    printf("Password: ");
 
                     fflush(stdin);// Limpiar el búfer de entrada
                     fgets(trypassword, sizeof(trypassword), stdin);
@@ -226,7 +225,7 @@ int main(){
                         break;
                     }
                     do {
-                        printf("-----ELIGA ALMACEN-----\n1)Almacen Pubela\n2)Almacen CDMX\n3)Regresar al inicio de sesion\nEliga opcion:");
+                        printf("-----ELIGA ALMACEN-----\n1)Almacen Puebla\n2)Almacen CDMX\n3)Regresar al inicio de sesion\nEliga opcion:");
                         scanf("%i",&opt2);
                         switch (opt2) {
                             case 1:
@@ -238,7 +237,7 @@ int main(){
                                     if(opt2==2){
                                         printf("-----ALMACEN CDMX-----\n");
                                     }
-                                    printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas \n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar a la selecion de almacenes\n7)Salir del programa\nEliga opcion:");
+                                    printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas \n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Regresar a la seleccion de almacenes\n7)Salir del programa\nEliga opcion:");
                                     scanf("%i",&opt3);
                                     int encontrado = 0;
                                     switch (opt3) {
@@ -346,7 +345,7 @@ int main(){
                                                                     }
                                                                 }
                                                                 if (end < num_articulos[opt2 - 1]) {
-                                                                    printf("Presione Enter para ver mas productos...\n");
+                                                                    printf("Presione ENTER para ver mas productos...\n");
                                                                     fflush(stdin);
                                                                     while (getchar() != '\n');
                                                                 }
@@ -358,7 +357,7 @@ int main(){
                                                     case 2:
                                                         bandera = 0;
                                                         printf("-----Buscar por ID-----\n");
-                                                        printf("Ingrese el ID del producto que dese bsucar:");
+                                                        printf("Ingrese el ID del producto que desee bsucar:");
                                                         scanf("%i", &idtemp);
                                                         serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
 
@@ -368,7 +367,7 @@ int main(){
                                                         ubi = 0;
                                                         //limpiarVector(idvec, MAX_ARTICULOS, 0);
                                                         printf("-----Buscar por nombre de libro-----\n");
-                                                        printf("Ingrese el nombre del libro que dese buscar:");
+                                                        printf("Ingrese el nombre del libro que desee buscar:");
                                                         fflush(stdin);
                                                         fgets(trytitulo, sizeof(trytitulo), stdin);
                                                         if (trytitulo[strlen(trytitulo) - 1] ==
@@ -395,7 +394,7 @@ int main(){
                                                         ubi = 0;
                                                         //limpiarVector(idvec, MAX_ARTICULOS, 0);
                                                         printf("-----Buscar por autor-----\n");
-                                                        printf("Ingrese el nombre del autor que dese buscar:");
+                                                        printf("Ingrese el nombre del autor que desee buscar:");
                                                         fflush(stdin);
                                                         fgets(trytitulo, sizeof(trytitulo), stdin);
                                                         if (trytitulo[strlen(trytitulo) - 1] ==
@@ -421,7 +420,7 @@ int main(){
                                                         bandera = 0;
                                                         ubi = 0;
                                                         printf("----Buscar en todos los almacenes-----\n");
-                                                        printf("Ingresa autor o titulo del libro:");
+                                                        printf("Ingresa el autor o titulo del libro:");
                                                         fflush(stdin);
                                                         fgets(trytitulo, sizeof(trytitulo), stdin);
                                                         if (trytitulo[strlen(trytitulo) - 1] ==
@@ -467,7 +466,7 @@ int main(){
                                             switch(opc){
                                                 case 1:
                                                     printf("-----Cambiar Titulo-----\n");
-                                                    printf("Ingresa Titulo del libro:");
+                                                    printf("Ingresa el titulo del libro:");
                                                     fflush(stdin);
                                                     fgets(titulo[opt2 - 1][idtemp - 1], sizeof(titulo[opt2 - 1][idtemp - 1]), stdin);
                                                     if (titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] == '\n') {
@@ -488,7 +487,7 @@ int main(){
 
                                                     break;
 
-                                                case 3:printf("-----Cambiar Tipo de pasta-----\n");
+                                                case 3:printf("-----Cambiar tipo de pasta-----\n");
                                                     tipod=tipo[opt2 - 1][idtemp - 1];
                                                     printf("Selecciona el tipo de pasta:\n1)Pasta dura\n2)Pasta blanda\n3)Audiolibro\n4)e-book\n\tSelecciona una opcion:");
                                                     scanf("%i", &tipo[opt2 - 1][idtemp - 1]);
@@ -553,7 +552,7 @@ int main(){
                                                     printf("%-5i | %-25s| %-10i| %-10.2f \n", id[opt2-1][idvec[i]], titulo[opt2-1][idvec[i]], existencia_temp,existencia_temp*precio[opt2-1][idvec[i]]);
                                                     totalPagar=totalPagar+(precio[opt2-1][idvec[i]]*(existencia_temp));
                                                 }
-                                                printf("El total a pagar por reabastecer todo es %.2f pesos\n1)Reabastecer todo\n2)Reabastecer por ID\nElegir opcion:",totalPagar);
+                                                printf("El total a pagar por reabastecer todo es de %.2f pesos\n1)Reabastecer todo\n2)Reabastecer por ID\nElegir opcion:",totalPagar);
                                                 scanf("%i", &maybe);
                                                 switch (maybe) {
                                                     case 1:
@@ -561,14 +560,14 @@ int main(){
                                                             pedido[opt2-1][idvec[i]]=maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
                                                             existencia[opt2-1][idvec[i]] = pedido[opt2-1][idvec[i]]+existencia[opt2-1][idvec[i]];
                                                         }
-                                                        printf("Se reabastecio exitosamente\n");
+                                                        printf("Se ha reabastecido exitosamente\n");
                                                         break;
                                                     case 2:
                                                         printf("Ingrese ID:");
                                                         scanf("%i",&idtemp);
                                                         pedido[opt2-1][idtemp-1]=maximo[opt2-1][idtemp-1]-existencia[opt2-1][idtemp-1];
                                                         existencia[opt2-1][idtemp-1] = pedido[opt2-1][idtemp-1]+existencia[opt2-1][idtemp-1];
-                                                        printf("Se reabastecio exitosamente\n");
+                                                        printf("Se ha reabastecido exitosamente\n");
                                                         break;
                                                     default:
                                                         printf("------Opcion invalida-----");
@@ -579,7 +578,7 @@ int main(){
                                             }
                                             break;
                                         case 6:
-                                            printf("Regresando a la selecion de almacenes...\n");
+                                            printf("Regresando a la seleccion de almacenes...\n");
                                             break;
                                         case 7:
                                             return 0;
