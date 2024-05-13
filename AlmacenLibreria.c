@@ -74,7 +74,7 @@ void printAutoresLibros(int ubi, int id[][MAX_ARTICULOS], char titulo[MAX_ALMACE
         }
     }
 }
-void serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulos[], char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], char author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS],int bandera){
+int serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulos[], char titulo[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], char author[MAX_ALMACENES][MAX_ARTICULOS][MAX_LENGTH], float precio[][MAX_ARTICULOS], int existencia[][MAX_ARTICULOS], int preorden[][MAX_ARTICULOS], int tipo[][MAX_ARTICULOS],int bandera){
     if (num_articulos[opt2 - 1] != 0) {
         for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
             if (idtemp == id[opt2 - 1][i]) {
@@ -116,6 +116,7 @@ void serchprintID(int opt2, int idtemp, int id[][MAX_ARTICULOS],int num_articulo
     } else {
         printf("El almacen esta vacio\n");
     }
+    return bandera;
 }
 
 int main(){
@@ -361,452 +362,509 @@ int main(){
     num_articulos[1] = 10;
 
 
-        do {
-            printf("1)Iniciar sesion\n2)Salir del almacen\nElija opcion:");
-            scanf("%i",&opt1);
-            switch (opt1) {
-                case 1:
-                    printf("User: ");
-                    fflush(stdin); // Limpiar el búfer de entrada
-                    fgets(tryuser, sizeof(tryuser), stdin);
-                    if (tryuser[strlen(tryuser) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
-                        tryuser[strlen(tryuser) - 1] = '\0';
-                    }
-                    printf("Password:");
+    do {
+        printf("1)Iniciar sesion\n2)Salir del almacen\nElija opcion:");
+        scanf("%i",&opt1);
+        switch (opt1) {
+            case 1:
+                printf("User:");
+                fflush(stdin); // Limpiar el búfer de entrada
+                fgets(tryuser, sizeof(tryuser), stdin);
+                if (tryuser[strlen(tryuser) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                    tryuser[strlen(tryuser) - 1] = '\0';
+                }
+                printf("Password:");
 
-                    fflush(stdin);// Limpiar el búfer de entrada
-                    fgets(trypassword, sizeof(trypassword), stdin);
-                    if (trypassword[strlen(trypassword) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
-                        trypassword[strlen(trypassword) - 1] = '\0';
-                    }
-                    for (int i = 0; i < sizeof (user); ++i) {
-                        if(strcmp(trypassword, password[i]) == 0 && strcmp(tryuser, user[i]) == 0 ){
-                            bandera=1;
-                            break;
-                        }
-                    }
-                    if(bandera==0){
-                        printf("La password o user son incorrectos\n");
+                fflush(stdin);// Limpiar el búfer de entrada
+                fgets(trypassword, sizeof(trypassword), stdin);
+                if (trypassword[strlen(trypassword) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                    trypassword[strlen(trypassword) - 1] = '\0';
+                }
+                for (int i = 0; i < sizeof (user); ++i) {
+                    if(strcmp(trypassword, password[i]) == 0 && strcmp(tryuser, user[i]) == 0 ){
+                        bandera=1;
                         break;
                     }
-                    do {
-                        printf("-----ELIGA ALMACEN-----\n1)Almacen Puebla\n2)Almacen CDMX\n3)Regresar al inicio de sesion\nEliga opcion:");
-                        scanf("%i",&opt2);
-                        switch (opt2) {
-                            case 1:
-                            case 2:
-                                do {
-                                    if(opt2==1){
-                                        printf("-----ALMACEN PUEBLA-----\n");
-                                    }
-                                    if(opt2==2){
-                                        printf("-----ALMACEN CDMX-----\n");
-                                    }
-                                    printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Bajas\n7)Regresar a la seleccion de almacenes\n8)Salir del programa\nEliga opcion:");
-                                    scanf("%i",&opt3);
-                                    int encontrado = 0;
-                                    switch (opt3) {
-                                        case 1:
-                                            printf("\n\n-----Bienvenido al menu de altas-----\n");
-                                            printf("\nIngrese el nombre del libro:");
-                                            fflush(stdin); // Limpiar el búfer de entrada
-                                            fgets(titulo[opt2-1][num_articulos[opt2-1]], sizeof(titulo[opt2-1][num_articulos[opt2-1]]), stdin);
-                                            if (titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
-                                                titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
-                                            }
-                                            convertirMayusculas(titulo[opt2-1][num_articulos[opt2-1]]);
-                                            printf("\nIngrese el nombre del autor:");
-                                            fgets(author[opt2-1][num_articulos[opt2-1]], sizeof(author[0][num_articulos[0]]), stdin);
-                                            if (author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
-                                                author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
-                                            }
-                                            convertirMayusculas(author[opt2-1][num_articulos[opt2-1]]);
-                                            printf("\nIngrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\nOpcion:");
-                                            scanf("%d", &tipo[opt2-1][num_articulos[opt2-1]]);
-                                            tipotemp=tipo[opt2 - 1][num_articulos[opt2-1]];
-                                            if(tipotemp>0 && tipotemp<5){
-                                            }else
+                }
+                if(bandera==0){
+                    printf("La password o user son incorrectos\n");
+                    break;
+                }
+                do {
+                    printf("-----ELIGA ALMACEN-----\n1)Almacen Puebla\n2)Almacen CDMX\n3)Regresar al inicio de sesion\nEliga opcion:");
+                    scanf("%i",&opt2);
+                    switch (opt2) {
+                        case 1:
+                        case 2:
+                            do {
+                                if(opt2==1){
+                                    printf("-----ALMACEN PUEBLA-----\n");
+                                }
+                                if(opt2==2){
+                                    printf("-----ALMACEN CDMX-----\n");
+                                }
+                                printf("-----MENU PRINCIPAL-----\n1)Altas\n2)Ventas\n3)Listar/Buscar\n4)Modificaciones\n5)Reabastecer\n6)Bajas\n7)Eliminar Producto\n8)Regresar a la seleccion de almacenes\n9)Salir del programa\nEliga opcion:");
+                                scanf("%i",&opt3);
+                                int encontrado = 0;
+                                switch (opt3) {
+                                    case 1:
+                                        printf("\n\n-----Bienvenido al menu de altas-----\n");
+                                        printf("\nIngrese el nombre del libro:");
+                                        fflush(stdin); // Limpiar el búfer de entrada
+                                        fgets(titulo[opt2-1][num_articulos[opt2-1]], sizeof(titulo[opt2-1][num_articulos[opt2-1]]), stdin);
+                                        if (titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                                            titulo[opt2-1][num_articulos[opt2-1]][strlen(titulo[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
+                                        }
+                                        convertirMayusculas(titulo[opt2-1][num_articulos[opt2-1]]);
+                                        printf("\nIngrese el nombre del autor:");
+                                        fgets(author[opt2-1][num_articulos[opt2-1]], sizeof(author[0][num_articulos[0]]), stdin);
+                                        if (author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] == '\n') { //Limpiar el ultimo caracter ingresado
+                                            author[opt2-1][num_articulos[opt2-1]][strlen(author[opt2-1][num_articulos[opt2-1]]) - 1] = '\0';
+                                        }
+                                        convertirMayusculas(author[opt2-1][num_articulos[opt2-1]]);
+                                        printf("\nIngrese el numero que corresponda al tipo de tapa:\n1.-Pasta Dura\n2.-Pasta Blanda\n3.-Audio libro\n4.-e-book\nOpcion:");
+                                        scanf("%d", &tipo[opt2-1][num_articulos[opt2-1]]);
+                                        tipotemp=tipo[opt2 - 1][num_articulos[opt2-1]];
+                                        if(tipotemp>0 && tipotemp<5){
+                                        }else
+                                        {
+                                            printf("No se reconoce el valor ingresado. . .\nSera registrado como desconocido\n");
+                                        }
+                                        printf("\nIngrese el precio:");
+                                        scanf("%f", &precio[opt2-1][num_articulos[opt2-1]]);
+                                        printf("\nIngrese la existencia:");
+                                        scanf("%d", &existencia[opt2-1][num_articulos[opt2-1]]);
+                                        printf("\nIngrese el punto de reorden:");
+                                        scanf("%d", &preorden[opt2-1][num_articulos[opt2-1]]);
+                                        printf("\nIngrese el maximo:");
+                                        scanf("%d", &maximo[opt2-1][num_articulos[opt2-1]]);
+                                        id[opt2-1][num_articulos[opt2-1]]=num_articulos[opt2-1]+1;
+                                        num_articulos[opt2-1]++;
+                                        printf("\n-----Alta exitosa-----\n\n");
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 2:
+                                        printf("\n\n-----Ventas-----\n");
+                                        int idVenta, cantidadVenta;
+                                        printf("Ingrese el ID del producto que desea vender: ");
+                                        scanf("%d", &idVenta);
+                                        printf("Ingrese la cantidad que desea vender: ");
+                                        scanf("%d", &cantidadVenta);
+                                        // Verificar si el producto está en el inventario
+                                        for (int i = 0; i < num_articulos[opt2 - 1]; i++)
+                                        {
+                                            if (idVenta == id[opt2 - 1][i])
                                             {
-                                                printf("No se reconoce el valor ingresado. . .\nSera registrado como desconocido\n");
-                                            }
-                                            printf("\nIngrese el precio:");
-                                            scanf("%f", &precio[opt2-1][num_articulos[opt2-1]]);
-                                            printf("\nIngrese la existencia:");
-                                            scanf("%d", &existencia[opt2-1][num_articulos[opt2-1]]);
-                                            printf("\nIngrese el punto de reorden:");
-                                            scanf("%d", &preorden[opt2-1][num_articulos[opt2-1]]);
-                                            printf("\nIngrese el maximo:");
-                                            scanf("%d", &maximo[opt2-1][num_articulos[opt2-1]]);
-                                            id[opt2-1][num_articulos[opt2-1]]=num_articulos[opt2-1]+1;
-                                            num_articulos[opt2-1]++;
-                                            printf("\n-----Alta exitosa-----\n\n");
-                                            break;
-                                        case 2:
-                                            printf("\n\n-----Ventas-----\n");
-                                            int idVenta, cantidadVenta;
-                                            printf("Ingrese el ID del producto que desea vender: ");
-                                            scanf("%d", &idVenta);
-                                            printf("Ingrese la cantidad que desea vender: ");
-                                            scanf("%d", &cantidadVenta);
-                                            // Verificar si el producto está en el inventario
-                                            for (int i = 0; i < num_articulos[opt2 - 1]; i++)
-                                            {
-                                                if (idVenta == id[opt2 - 1][i])
+                                                encontrado = 1;
+                                                if (existencia[opt2 - 1][i] >= cantidadVenta)
                                                 {
-                                                    encontrado = 1;
-                                                    if (existencia[opt2 - 1][i] >= cantidadVenta)
-                                                    {
-                                                        // Actualizar la existencia del producto
-                                                        existencia[opt2 - 1][i] -= cantidadVenta;
-                                                        printf("Venta realizada correctamente.\n");
-                                                    }
-                                                    else
-                                                    {
-                                                        printf("No hay suficiente cantidad en el inventario.\n");
-                                                    }
-                                                    // No hay salto aquí
+                                                    // Actualizar la existencia del producto
+                                                    existencia[opt2 - 1][i] -= cantidadVenta;
+                                                    printf("Venta realizada correctamente.\n");
                                                 }
+                                                else
+                                                {
+                                                    printf("No hay suficiente cantidad en el inventario.\n");
+                                                }
+                                                // No hay salto aquí
                                             }
-                                            if (!encontrado)
-                                            {
-                                                printf("El ID del producto no existe en el inventario.\n");
-                                            }
-                                            break;
-                                        case 3:
-                                            do {
-                                                printf("\n-----Listar/Buscar-----\n");
-                                                printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Regresar al menu principal\nEliga opcion:");
-                                                scanf("%i",&opt4);
-                                                switch (opt4) {
-                                                    case 1:
-                                                        printf("\n-----Listar Todo-----\n");
-                                                        if (num_articulos[opt2 - 1] != 0) {
-                                                            printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
-                                                                   "ID", "Titulo", "Autor", "Precio", "Existencia",
-                                                                   "Punto de reorden", "Tipo");
-                                                            for (int i = 0; i < num_articulos[opt2 - 1]; i += 10) {
-                                                                int end = (i + 10 < num_articulos[opt2 - 1]) ? i + 10
-                                                                                                             : num_articulos[
-                                                                                  opt2 - 1];
-                                                                for (int j = i; j < end; j++) {//ID: %i|Titulo: %s|Author: %s|Precio: %.2f|Existencia: %i|Punto de reorden: %i|Tipo:%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |
-                                                                    printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ",
-                                                                           id[opt2 - 1][j], titulo[opt2 - 1][j], author[opt2 - 1][j], precio[opt2 - 1][j],
-                                                                           existencia[opt2 - 1][j], preorden[opt2 - 1][j]);
+                                        }
+                                        if (!encontrado)
+                                        {
+                                            printf("El ID del producto no existe en el inventario.\n");
+                                        }
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 3:
+                                        do {
+                                            printf("\n-----Listar/Buscar-----\n");
+                                            printf("1)Listar todo\n2)Buscar por ID\n3)Buscar por nombre de libro\n4)Buscar por autor\n5)Buscar en todos los almacenes\n6)Regresar al menu principal\nEliga opcion:");
+                                            scanf("%i",&opt4);
+                                            switch (opt4) {
+                                                case 1:
+                                                    printf("\n-----Listar Todo-----\n");
+                                                    if (num_articulos[opt2 - 1] != 0) {
+                                                        printf("%-5s | %-25s | %-25s | %-10s | %-12s | %-15s | %-20s \n",
+                                                               "ID", "Titulo", "Autor", "Precio", "Existencia",
+                                                               "Punto de reorden", "Tipo");
+                                                        for (int i = 0; i < num_articulos[opt2 - 1]; i += 10) {
+                                                            int end = (i + 10 < num_articulos[opt2 - 1]) ? i + 10
+                                                                                                         : num_articulos[
+                                                                              opt2 - 1];
+                                                            for (int j = i; j < end; j++) {//ID: %i|Titulo: %s|Author: %s|Precio: %.2f|Existencia: %i|Punto de reorden: %i|Tipo:%-5i | %-25s | %-25s | %-10.2f | %-12i | %-15i |
+                                                                printf("%-5i | %-25s | %-25s | %-10.2f | %-12i | %-16i | ",
+                                                                       id[opt2 - 1][j], titulo[opt2 - 1][j], author[opt2 - 1][j], precio[opt2 - 1][j],
+                                                                       existencia[opt2 - 1][j], preorden[opt2 - 1][j]);
 
-                                                                    switch (tipo[opt2 - 1][j]) {
-                                                                        case 1:
-                                                                            printf("Pasta dura\n");
-                                                                            break;
-                                                                        case 2:
-                                                                            printf("Pasta blanda\n");
-                                                                            break;
-                                                                        case 3:
-                                                                            printf("Audio libro\n");
-                                                                            break;
-                                                                        case 4:
-                                                                            printf("E-Book\n");
-                                                                            break;
-                                                                        default:
-                                                                            printf("Tipo desconocido\n");
-                                                                            break;
-                                                                    }
-                                                                }
-                                                                if (end < num_articulos[opt2 - 1]) {
-                                                                    printf("Presione ENTER para ver mas productos...\n");
-                                                                    fflush(stdin);
-                                                                    while (getchar() != '\n');
+                                                                switch (tipo[opt2 - 1][j]) {
+                                                                    case 1:
+                                                                        printf("Pasta dura\n");
+                                                                        break;
+                                                                    case 2:
+                                                                        printf("Pasta blanda\n");
+                                                                        break;
+                                                                    case 3:
+                                                                        printf("Audio libro\n");
+                                                                        break;
+                                                                    case 4:
+                                                                        printf("E-Book\n");
+                                                                        break;
+                                                                    default:
+                                                                        printf("Tipo desconocido\n");
+                                                                        break;
                                                                 }
                                                             }
-                                                        } else {
-                                                            printf("El almacen esta vacio\n");
-                                                        }
-                                                        break;
-                                                    case 2:
-                                                        bandera = 0;
-                                                        printf("-----Buscar por ID-----\n");
-                                                        printf("Ingrese el ID del producto que desee bsucar:");
-                                                        scanf("%i", &idtemp);
-                                                        serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
-
-                                                        break;
-                                                    case 3:
-                                                        bandera = 0;
-                                                        ubi = 0;
-                                                        //limpiarVector(idvec, MAX_ARTICULOS, 0);
-                                                        printf("-----Buscar por nombre de libro-----\n");
-                                                        printf("Ingrese el nombre del libro que desee buscar:");
-                                                        fflush(stdin);
-                                                        fgets(trytitulo, sizeof(trytitulo), stdin);
-                                                        if (trytitulo[strlen(trytitulo) - 1] ==
-                                                            '\n') { //Limpiar el ultimo caracter ingresado
-                                                            trytitulo[strlen(trytitulo) - 1] = '\0';
-                                                        }
-                                                        convertirMayusculas(trytitulo);
-                                                        for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
-                                                            if (strcmp(trytitulo, titulo[opt2 - 1][i]) == 0) {
-                                                                bandera = 1;
-                                                                idvec[ubi++] = i;
-
+                                                            if (end < num_articulos[opt2 - 1]) {
+                                                                printf("Presione ENTER para ver mas productos...\n");
+                                                                fflush(stdin);
+                                                                while (getchar() != '\n');
                                                             }
                                                         }
+                                                    } else {
+                                                        printf("El almacen esta vacio\n");
+                                                    }
+                                                    printf("PRESIONE ENTER PARA CONTINUAR...");
+                                                    fflush(stdin);
+                                                    getchar();
+                                                    break;
+                                                case 2:
+                                                    bandera = 0;
+                                                    printf("-----Buscar por ID-----\n");
+                                                    printf("Ingrese el ID del producto que desee bsucar:");
+                                                    scanf("%i", &idtemp);
+                                                    serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
+                                                    printf("PRESIONE ENTER PARA CONTINUAR...");
+                                                    fflush(stdin);
+                                                    getchar();
+                                                    break;
+                                                case 3:
+                                                    bandera = 0;
+                                                    ubi = 0;
+                                                    //limpiarVector(idvec, MAX_ARTICULOS, 0);
+                                                    printf("-----Buscar por nombre de libro-----\n");
+                                                    printf("Ingrese el nombre del libro que desee buscar:");
+                                                    fflush(stdin);
+                                                    fgets(trytitulo, sizeof(trytitulo), stdin);
+                                                    if (trytitulo[strlen(trytitulo) - 1] ==
+                                                        '\n') { //Limpiar el ultimo caracter ingresado
+                                                        trytitulo[strlen(trytitulo) - 1] = '\0';
+                                                    }
+                                                    convertirMayusculas(trytitulo);
+                                                    for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
+                                                        if (strcmp(trytitulo, titulo[opt2 - 1][i]) == 0) {
+                                                            bandera = 1;
+                                                            idvec[ubi++] = i;
 
-                                                        if (bandera != 0) {
-                                                            printAutoresLibros(ubi, id, titulo, author, precio, existencia, preorden, tipo, opt2, idvec);
-                                                        } else {
-                                                            printf("No lo tenemos\n");
                                                         }
-                                                        break;
-                                                    case 4:
-                                                        bandera = 0;
-                                                        ubi = 0;
-                                                        //limpiarVector(idvec, MAX_ARTICULOS, 0);
-                                                        printf("-----Buscar por autor-----\n");
-                                                        printf("Ingrese el nombre del autor que desee buscar:");
-                                                        fflush(stdin);
-                                                        fgets(trytitulo, sizeof(trytitulo), stdin);
-                                                        if (trytitulo[strlen(trytitulo) - 1] ==
-                                                            '\n') { //Limpiar el ultimo caracter ingresado
-                                                            trytitulo[strlen(trytitulo) - 1] = '\0';
+                                                    }
+
+                                                    if (bandera != 0) {
+                                                        printAutoresLibros(ubi, id, titulo, author, precio, existencia, preorden, tipo, opt2, idvec);
+                                                    } else {
+                                                        printf("No lo tenemos\n");
+                                                    }
+                                                    printf("PRESIONE ENTER PARA CONTINUAR...");
+                                                    fflush(stdin);
+                                                    getchar();
+                                                    break;
+                                                case 4:
+                                                    bandera = 0;
+                                                    ubi = 0;
+                                                    //limpiarVector(idvec, MAX_ARTICULOS, 0);
+                                                    printf("-----Buscar por autor-----\n");
+                                                    printf("Ingrese el nombre del autor que desee buscar:");
+                                                    fflush(stdin);
+                                                    fgets(trytitulo, sizeof(trytitulo), stdin);
+                                                    if (trytitulo[strlen(trytitulo) - 1] ==
+                                                        '\n') { //Limpiar el ultimo caracter ingresado
+                                                        trytitulo[strlen(trytitulo) - 1] = '\0';
+                                                    }
+                                                    convertirMayusculas(trytitulo);
+                                                    for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
+                                                        if (strcmp(trytitulo, author[opt2 - 1][i]) == 0) {
+                                                            bandera = 1;
+                                                            idvec[ubi] = i;
+
+                                                            ubi++;
                                                         }
-                                                        convertirMayusculas(trytitulo);
-                                                        for (int i = 0; i < num_articulos[opt2 - 1]; ++i) {
-                                                            if (strcmp(trytitulo, author[opt2 - 1][i]) == 0) {
+                                                    }
+
+                                                    if (bandera != 0) {
+                                                        printAutoresLibros(ubi, id, titulo, author, precio, existencia, preorden, tipo, opt2, idvec);
+                                                    } else {
+                                                        printf("No lo tenemos\n");
+                                                    }
+                                                    printf("PRESIONE ENTER PARA CONTINUAR...");
+                                                    fflush(stdin);
+                                                    getchar();
+                                                    break;
+                                                case 5:
+                                                    bandera = 0;
+                                                    ubi = 0;
+                                                    printf("----Buscar en todos los almacenes-----\n");
+                                                    printf("Ingresa el autor o titulo del libro:");
+                                                    fflush(stdin);
+                                                    fgets(trytitulo, sizeof(trytitulo), stdin);
+                                                    if (trytitulo[strlen(trytitulo) - 1] ==
+                                                        '\n') { //Limpiar el ultimo caracter ingresado
+                                                        trytitulo[strlen(trytitulo) - 1] = '\0';
+                                                    }
+                                                    convertirMayusculas(trytitulo);
+                                                    for (int i = 0; i < MAX_ALMACENES; ++i) {
+                                                        for (int j = 0; j < num_articulos[i]; ++j) {
+                                                            if (strcmp(trytitulo, author[i][j]) == 0||strcmp(trytitulo, titulo[i][j])==0) {
                                                                 bandera = 1;
-                                                                idvec[ubi] = i;
-
+                                                                idvec[ubi] = j;
+                                                                almacenvec[ubi]=i;
                                                                 ubi++;
                                                             }
                                                         }
-
-                                                        if (bandera != 0) {
-                                                            printAutoresLibros(ubi, id, titulo, author, precio, existencia, preorden, tipo, opt2, idvec);
-                                                        } else {
-                                                            printf("No lo tenemos\n");
-                                                        }
-                                                        break;
-                                                    case 5:
-                                                        bandera = 0;
-                                                        ubi = 0;
-                                                        printf("----Buscar en todos los almacenes-----\n");
-                                                        printf("Ingresa el autor o titulo del libro:");
-                                                        fflush(stdin);
-                                                        fgets(trytitulo, sizeof(trytitulo), stdin);
-                                                        if (trytitulo[strlen(trytitulo) - 1] ==
-                                                            '\n') { //Limpiar el ultimo caracter ingresado
-                                                            trytitulo[strlen(trytitulo) - 1] = '\0';
-                                                        }
-                                                        convertirMayusculas(trytitulo);
-                                                        for (int i = 0; i < MAX_ALMACENES; ++i) {
-                                                            for (int j = 0; j < num_articulos[i]; ++j) {
-                                                                if (strcmp(trytitulo, author[i][j]) == 0||strcmp(trytitulo, titulo[i][j])==0) {
-                                                                    bandera = 1;
-                                                                    idvec[ubi] = j;
-                                                                    almacenvec[ubi]=i;
-                                                                    ubi++;
-                                                                }
-                                                            }
-                                                        }
-                                                        if (bandera != 0) {
-                                                            printAlmacenes(ubi, id, titulo, author, precio, existencia, preorden, tipo, almacenvec,idvec);
-
-                                                        } else {
-                                                            printf("No lo tenemos\n");
-                                                        }
-                                                        break;
-                                                    case 6:
-                                                        printf("Regresando al menu principal...\n");
-                                                        break;
-                                                    default:
-                                                        printf("<----->Ingresaste una opcion incorrecta<----->\n");
-                                                        break;
-                                                }
-                                            } while (opt4!=6);
-                                            break;
-                                        case 4:
-                                            printf("-----Modificaciones-----\n");
-                                            bandera=0;
-                                            printf("Ingresa el ID del libro supuesto a modificaciones:");
-                                            scanf("%i", &idtemp);
-                                            serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
-                                            printf("Que dato desaeas cambiar?\n1)Titulo\n2)Autor\n3)Tipo de libro\n4)Precio\n5)Existencia\n6)Punto de reorden\n7)Regresar al menu principal\n");
-                                            printf("\tSelecciona una opcion: ");
-                                            scanf("%i", &opc);
-
-                                            switch(opc){
-                                                case 1:
-                                                    printf("-----Cambiar Titulo-----\n");
-                                                    printf("Ingresa el titulo del libro:");
-                                                    fflush(stdin);
-                                                    fgets(titulo[opt2 - 1][idtemp - 1], sizeof(titulo[opt2 - 1][idtemp - 1]), stdin);
-                                                    if (titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] == '\n') {
-                                                        titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] = '\0';
                                                     }
-                                                    convertirMayusculas(titulo[opt2 - 1][idtemp - 1]);
-                                                    printf("\tCambio realizado con exito\n");
-                                                    break;
+                                                    if (bandera != 0) {
+                                                        printAlmacenes(ubi, id, titulo, author, precio, existencia, preorden, tipo, almacenvec,idvec);
 
-                                                case 2:printf("-----Cambiar Autor-----\n");
-                                                    printf("Ingresa el nombre de autor:");
-                                                    fflush(stdin);
-                                                    fgets(author[opt2 - 1][idtemp - 1], sizeof(author[opt2 - 1][idtemp - 1]), stdin);
-                                                    if (author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] == '\n') {
-                                                        author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] = '\0';
-                                                    }
-                                                    convertirMayusculas(author[opt2 - 1][idtemp - 1]);
-                                                    printf("\tCambio realizado con exito\n");
-                                                    break;
-
-                                                case 3:printf("-----Cambiar tipo de pasta-----\n");
-                                                    tipod=tipo[opt2 - 1][idtemp - 1];
-                                                    printf("Selecciona el tipo de pasta:\n1)Pasta dura\n2)Pasta blanda\n3)Audiolibro\n4)e-book\n\tSelecciona una opcion:");
-                                                    scanf("%i", &tipo[opt2 - 1][idtemp - 1]);
-                                                    tipotemp=tipo[opt2 - 1][idtemp - 1];
-                                                    if(tipotemp>0 && tipotemp<5){
-                                                        printf("\tCambio realizado con exito\n");
-                                                    }else
-                                                    {
-                                                        printf("No se reconoce el valor ingresado. . .\nNo se cambiara el valor\n");
-                                                        tipo[opt2 - 1][idtemp - 1]=tipod;
+                                                    } else {
+                                                        printf("No lo tenemos\n");
                                                     }
                                                     break;
-
-                                                case 4:printf("-----Cambiar Precio----\n");
-                                                    printf("Ingresa el precio:");
-                                                    scanf("%f", &precio[opt2 - 1][idtemp - 1]);
-                                                    printf("\tCambio realizado con exito\n");
+                                                case 6:
+                                                    printf("Regresando al menu principal...\n");
                                                     break;
-
-                                                case 5:printf("-----Cambiar Existencia-----\n");
-                                                    printf("Ingresa la existencia:");
-                                                    scanf("%i", &existencia[opt2 - 1][idtemp - 1]);
-                                                    printf("\tCambio realizado con exito\n");
-                                                    break;
-
-                                                case 6:printf("-----Cambiar Punto de Reorden-----\n");
-                                                    printf("Ingresa el punto de reorden:");
-                                                    scanf("%i", &preorden[opt2 - 1][idtemp - 1]);
-                                                    printf("\tCambio realizado con exito\n");
-                                                    break;
-
-                                                case 7:printf("-----Regreso al menu 3-----\n");
-
-                                                    printf("Regresando. . .\n");
-                                                    break;
-
                                                 default:
-                                                    printf("<----->Selecciona una opcion valida<----->\n");
+                                                    printf("<----->Ingresaste una opcion incorrecta<----->\n");
                                                     break;
                                             }
+                                        } while (opt4!=6);
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 4:
+                                        printf("-----Modificaciones-----\n");
+                                        bandera=0;
+                                        printf("Ingresa el ID del libro supuesto a modificaciones:");
+                                        scanf("%i", &idtemp);
+                                        serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera);
+                                        printf("Que dato desaeas cambiar?\n1)Titulo\n2)Autor\n3)Tipo de libro\n4)Precio\n5)Existencia\n6)Punto de reorden\n7)Regresar al menu principal\n");
+                                        printf("\tSelecciona una opcion: ");
+                                        scanf("%i", &opc);
 
-                                            break;
-                                        case 5:
-                                            printf("-----Reabastecer-----\n");
-                                            int	maybe = 0,existencia_temp;
-                                            float totalPagar=0;
-                                            bandera=0;
-                                            for (int i = 0;i< num_articulos[opt2 - 1]; i++) {
-
-                                                if (existencia[opt2 - 1][i] < preorden[opt2 - 1][i]) {
-                                                    bandera = 1;
-                                                    idvec[ubi] = i;
-                                                    ubi++;
+                                        switch(opc){
+                                            case 1:
+                                                printf("-----Cambiar Titulo-----\n");
+                                                printf("Ingresa el titulo del libro:");
+                                                fflush(stdin);
+                                                fgets(titulo[opt2 - 1][idtemp - 1], sizeof(titulo[opt2 - 1][idtemp - 1]), stdin);
+                                                if (titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] == '\n') {
+                                                    titulo[opt2 - 1][idtemp - 1][strlen(titulo[opt2 - 1][idtemp - 1]) - 1] = '\0';
                                                 }
-                                            }
+                                                convertirMayusculas(titulo[opt2 - 1][idtemp - 1]);
+                                                printf("\tCambio realizado con exito\n");
+                                                break;
 
-                                            if (bandera == 1){
-                                                printf("%-5s | %-25s| %-10s| %-10s\n","ID","Titulo","Pedir","Costo");
-                                                for (int i = 0;i < ubi; i++){
-                                                    existencia_temp = maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
-
-                                                    printf("%-5i | %-25s| %-10i| %-10.2f \n", id[opt2-1][idvec[i]], titulo[opt2-1][idvec[i]], existencia_temp,existencia_temp*precio[opt2-1][idvec[i]]);
-                                                    totalPagar=totalPagar+(precio[opt2-1][idvec[i]]*(existencia_temp));
+                                            case 2:printf("-----Cambiar Autor-----\n");
+                                                printf("Ingresa el nombre de autor:");
+                                                fflush(stdin);
+                                                fgets(author[opt2 - 1][idtemp - 1], sizeof(author[opt2 - 1][idtemp - 1]), stdin);
+                                                if (author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] == '\n') {
+                                                    author[opt2 - 1][idtemp - 1][strlen(author[opt2 - 1][idtemp - 1]) - 1] = '\0';
                                                 }
-                                                printf("El total a pagar por reabastecer todo es de %.2f pesos\n1)Reabastecer todo\n2)Reabastecer por ID\nElegir opcion:",totalPagar);
-                                                scanf("%i", &maybe);
-                                                switch (maybe) {
-                                                    case 1:
-                                                        for (int i = 0; i < ubi; ++i) {
-                                                            pedido[opt2-1][idvec[i]]=maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
-                                                            existencia[opt2-1][idvec[i]] = pedido[opt2-1][idvec[i]]+existencia[opt2-1][idvec[i]];
-                                                        }
-                                                        printf("Se ha reabastecido exitosamente\n");
-                                                        break;
-                                                    case 2:
-                                                        printf("Ingrese ID:");
-                                                        scanf("%i",&idtemp);
-                                                        pedido[opt2-1][idtemp-1]=maximo[opt2-1][idtemp-1]-existencia[opt2-1][idtemp-1];
-                                                        existencia[opt2-1][idtemp-1] = pedido[opt2-1][idtemp-1]+existencia[opt2-1][idtemp-1];
-                                                        printf("Se ha reabastecido exitosamente\n");
-                                                        break;
-                                                    default:
-                                                        printf("------Opcion invalida-----");
-                                                        break;
-                                                }
-                                            }else{
-                                                printf("No hay nada que reabastecer\n");
-                                            }
-                                            break;
-                                        case 6:
-                                            printf("-----Bajas-----\n");
-                                            idVenta=0, cantidadVenta=0;
-                                            printf("Ingrese el ID del producto que desea dar de baja: ");
-                                            scanf("%d", &idVenta);
-                                            printf("Ingrese la cantidad que desea dar de baja: ");
-                                            scanf("%d", &cantidadVenta);
-                                            // Verificar si el producto está en el inventario
-                                            for (int i = 0; i < num_articulos[opt2 - 1]; i++)
-                                            {
-                                                if (idVenta == id[opt2 - 1][i])
+                                                convertirMayusculas(author[opt2 - 1][idtemp - 1]);
+                                                printf("\tCambio realizado con exito\n");
+                                                printf("PRESIONE ENTER PARA CONTINUAR...");
+                                                fflush(stdin);
+                                                getchar();
+                                                break;
+                                            case 3:printf("-----Cambiar tipo de pasta-----\n");
+                                                tipod=tipo[opt2 - 1][idtemp - 1];
+                                                printf("Selecciona el tipo de pasta:\n1)Pasta dura\n2)Pasta blanda\n3)Audiolibro\n4)e-book\n\tSelecciona una opcion:");
+                                                scanf("%i", &tipo[opt2 - 1][idtemp - 1]);
+                                                tipotemp=tipo[opt2 - 1][idtemp - 1];
+                                                if(tipotemp>0 && tipotemp<5){
+                                                    printf("\tCambio realizado con exito\n");
+                                                }else
                                                 {
-                                                    encontrado = 1;
-                                                    if (existencia[opt2 - 1][i] >= cantidadVenta)
-                                                    {
-                                                        // Actualizar la existencia del producto
-                                                        existencia[opt2 - 1][i] -= cantidadVenta;
-                                                        printf("Baja realizada correctamente.\n");
-                                                    }
-                                                    else
-                                                    {
-                                                        printf("La cantidad dada es mayor a la cantidad en existencia.\n");
-                                                    }
-                                                    // No hay salto aquí
+                                                    printf("No se reconoce el valor ingresado. . .\nNo se cambiara el valor\n");
+                                                    tipo[opt2 - 1][idtemp - 1]=tipod;
                                                 }
+                                                break;
+
+                                            case 4:printf("-----Cambiar Precio----\n");
+                                                printf("Ingresa el precio:");
+                                                scanf("%f", &precio[opt2 - 1][idtemp - 1]);
+                                                printf("\tCambio realizado con exito\n");
+                                                break;
+
+                                            case 5:printf("-----Cambiar Existencia-----\n");
+                                                printf("Ingresa la existencia:");
+                                                scanf("%i", &existencia[opt2 - 1][idtemp - 1]);
+                                                printf("\tCambio realizado con exito\n");
+                                                break;
+
+                                            case 6:printf("-----Cambiar Punto de Reorden-----\n");
+                                                printf("Ingresa el punto de reorden:");
+                                                scanf("%i", &preorden[opt2 - 1][idtemp - 1]);
+                                                printf("\tCambio realizado con exito\n");
+                                                break;
+
+                                            case 7:printf("-----Regreso al menu principla-----\n");
+
+                                                printf("Regresando. . .\n");
+                                                break;
+
+                                            default:
+                                                printf("<----->Selecciona una opcion valida<----->\n");
+                                                break;
+                                        }
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 5:
+                                        printf("-----Reabastecer-----\n");
+                                        int	maybe = 0,existencia_temp;
+                                        float totalPagar=0;
+                                        bandera=0,ubi=0;
+                                        for (int i = 0;i< num_articulos[opt2 - 1]; i++) {
+
+                                            if (existencia[opt2 - 1][i] < preorden[opt2 - 1][i]) {
+                                                bandera = 1;
+                                                idvec[ubi] = i;
+                                                ubi++;
                                             }
-                                            if (!encontrado)
+                                        }
+
+                                        if (bandera == 1){
+                                            printf("%-5s | %-25s| %-10s| %-10s\n","ID","Titulo","Pedir","Costo");
+                                            for (int i = 0;i < ubi; i++){
+                                                existencia_temp = maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
+
+                                                printf("%-5i | %-25s| %-10i| %-10.2f \n", id[opt2-1][idvec[i]], titulo[opt2-1][idvec[i]], existencia_temp,existencia_temp*precio[opt2-1][idvec[i]]);
+                                                totalPagar=totalPagar+(precio[opt2-1][idvec[i]]*(existencia_temp));
+                                            }
+                                            printf("El total a pagar por reabastecer todo es de %.2f pesos\n1)Reabastecer todo\n2)Reabastecer por ID\nElegir opcion:",totalPagar);
+                                            scanf("%i", &maybe);
+                                            switch (maybe) {
+                                                case 1:
+                                                    for (int i = 0; i < ubi; ++i) {
+                                                        pedido[opt2-1][idvec[i]]=maximo[opt2-1][idvec[i]]-existencia[opt2-1][idvec[i]];
+                                                        existencia[opt2-1][idvec[i]] = pedido[opt2-1][idvec[i]]+existencia[opt2-1][idvec[i]];
+                                                    }
+                                                    printf("Se ha reabastecido exitosamente\n");
+                                                    break;
+                                                case 2:
+                                                    printf("Ingrese ID:");
+                                                    scanf("%i",&idtemp);
+                                                    pedido[opt2-1][idtemp-1]=maximo[opt2-1][idtemp-1]-existencia[opt2-1][idtemp-1];
+                                                    existencia[opt2-1][idtemp-1] = pedido[opt2-1][idtemp-1]+existencia[opt2-1][idtemp-1];
+                                                    printf("Se ha reabastecido exitosamente\n");
+                                                    break;
+                                                default:
+                                                    printf("------Opcion invalida-----");
+                                                    break;
+                                            }
+                                        }else{
+                                            printf("No hay nada que reabastecer\n");
+                                        }
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 6:
+                                        printf("-----Bajas-----\n");
+                                        idVenta=0, cantidadVenta=0;
+                                        printf("Ingrese el ID del producto que desea dar de baja: ");
+                                        scanf("%d", &idVenta);
+                                        printf("Ingrese la cantidad que desea dar de baja: ");
+                                        scanf("%d", &cantidadVenta);
+                                        // Verificar si el producto está en el inventario
+                                        for (int i = 0; i < num_articulos[opt2 - 1]; i++)
+                                        {
+                                            if (idVenta == id[opt2 - 1][i])
                                             {
-                                                printf("El ID del producto no existe en el inventario.\n");
+                                                encontrado = 1;
+                                                if (existencia[opt2 - 1][i] >= cantidadVenta)
+                                                {
+                                                    // Actualizar la existencia del producto
+                                                    existencia[opt2 - 1][i] -= cantidadVenta;
+                                                    printf("Baja realizada correctamente.\n");
+                                                }
+                                                else
+                                                {
+                                                    printf("La cantidad dada es mayor a la cantidad en existencia.\n");
+                                                }
+                                                // No hay salto aquí
                                             }
-                                            break;
-                                        case 7:
-                                            printf("Regresando a la seleccion de almacenes...\n");
-                                            break;
-                                        case 8:
-                                            printf("Saliendo del programa...");
-                                            return 0;
-                                        default:
-                                            printf("<----->Ingresaste una opcion invalida<----->\n");
-                                            break;
-                                    }
-                                } while (opt3!=7);
-                                break;
-                            case 3:
-                                printf("-----Regresando al inicio de sesion...-----\n");
-                                break;
-                            default:
-                                printf("<----->Ingresaste una opcion invalida<----->\n");
-                                break;
+                                        }
+                                        if (!encontrado)
+                                        {
+                                            printf("El ID del producto no existe en el inventario.\n");
+                                        }
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 7:
+                                        bandera=0;
+                                        printf("\n-----Eliminar producto-----\n");
+                                        printf("Dame el ID del elemento que desea eliminar:");
+                                        scanf("%i",&idtemp);
+                                        if(serchprintID(opt2, idtemp, id,num_articulos, titulo,author,precio, existencia,preorden,tipo,bandera)==1){
+                                            if(existencia[opt2-1][idtemp-1]<=0 ){
+                                                id[opt1-1][idtemp-1]=id[opt2-1][(idtemp-1)+1];
+                                                preorden[opt2-1][idtemp-1]=preorden[opt2-1][(idtemp-1)+1];
+                                                existencia[opt2-1][idtemp-1]=existencia[opt2-1][(idtemp-1)+1];
+                                                maximo[opt2-1][idtemp-1]=maximo[opt2-1][(idtemp-1)+1];
+                                                pedido[opt2-1][idtemp-1]=pedido[opt2-1][(idtemp-1)+1];
+                                                tipo[opt2-1][idtemp-1]=tipo[opt2][(idtemp-1)+1];
+                                                precio[opt2-1][idtemp-1]=precio[opt2-1][(idtemp-1)+1];
+                                                strcpy(titulo[opt2-1][idtemp-1],titulo[opt2-1][(idtemp-1)+1]);
+                                                strcpy(author[opt2-1][idtemp-1],author[opt2-1][(idtemp-1)+1]);
+                                                num_articulos[opt2-1]--;
+                                                printf("Producto eliminado con exito\n");
+                                            } else{
+                                                printf("Aun tienes existencia en el almacen\nSe requiere dar de baja el producto primero\n");
+                                            }
+                                        }
 
-                        }
-                    } while (opt2!=3);
+                                        printf("PRESIONE ENTER PARA CONTINUAR...");
+                                        fflush(stdin);
+                                        getchar();
+                                        break;
+                                    case 8:
+                                        printf("Regresando a la seleccion de almacenes...\n");
+                                        break;
+                                    case 9:
+                                        printf("Saliendo del programa...");
+                                        return 0;
+                                    default:
+                                        printf("<----->Ingresaste una opcion invalida<----->\n");
+                                        break;
+                                }
+                            } while (opt3!=8);
+                            break;
+                        case 3:
+                            printf("-----Regresando al inicio de sesion...-----\n");
+                            break;
+                        default:
+                            printf("<----->Ingresaste una opcion invalida<----->\n");
+                            break;
 
-                    break;
-                case 2:
-                    printf("Estas saliendo del progrma...\n");
-                    break;
-                default:
-                    printf("<----->Ingresaste una opcion invalida<----->\n");
-                    break;
-            }
-        } while (opt1!=2);
+                    }
+                } while (opt2!=3);
+
+                break;
+            case 2:
+                printf("Estas saliendo del progrma...\n");
+                break;
+            default:
+                printf("<----->Ingresaste una opcion invalida<----->\n");
+                break;
+        }
+    } while (opt1!=2);
     return 0;
 }
